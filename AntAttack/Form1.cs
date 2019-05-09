@@ -22,12 +22,39 @@ namespace AntAttack
             
             _graphics = CreateGraphics();
             _renderer = new Renderer(_graphics);
-            _map = new Map();
+            _map = new Map("AntAttack/Resources/map.txt");
         }
 
         public void OnTick(object sender, EventArgs e)
         {
-            _renderer.Render(_map);
+            _renderer.RenderMap(_map);
+            
+            Vector2 d = new Vector2(0, 0);
+            switch (_keyPressed)
+            {
+                    case Keys.Up: 
+                        d.Y = 5;
+                        break;
+                    case Keys.Down:
+                        d.Y = -5;
+                        break;
+                    case Keys.Left: 
+                        d.X = 5;
+                        break;
+                    case Keys.Right:
+                        d.X = -5;
+                        break;
+            }
+
+            _renderer.Position += d;
+            _keyPressed = Keys.None;
+        }
+
+        private Keys _keyPressed;
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            _keyPressed = keyData;
+            return base.ProcessCmdKey(ref msg, keyData);
         }
     }
 }

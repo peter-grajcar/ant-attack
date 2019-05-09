@@ -10,7 +10,7 @@ namespace AntAttack
             this.X = x;
             this.Y = y;
         }
-
+        
         public static Vector2 operator +(Vector2 u, Vector2 v)
         {
             return new Vector2(u.X + v.X, u.Y + v.Y);
