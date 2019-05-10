@@ -21,7 +21,7 @@ namespace AntAttack
             timer.Enabled = true;
             
             _graphics = CreateGraphics();
-            _renderer = new Renderer(_graphics);
+            _renderer = new Renderer(_graphics, 20);
             _map = new Map("AntAttack/Resources/map.txt");
         }
 
@@ -33,20 +33,25 @@ namespace AntAttack
             switch (_keyPressed)
             {
                     case Keys.Up: 
-                        d.Y = 5;
+                        d.Y = _renderer.VerticalSize/2;
                         break;
                     case Keys.Down:
-                        d.Y = -5;
+                        d.Y = -_renderer.VerticalSize/2;
                         break;
                     case Keys.Left: 
-                        d.X = 5;
+                        d.X = _renderer.HorizontalSize/2;
                         break;
                     case Keys.Right:
-                        d.X = -5;
+                        d.X = -_renderer.HorizontalSize/2;
+                        break;
+                    case Keys.Space:
+                        _renderer.Orientation = _renderer.Orientation == Renderer.Direction.NorthEast
+                            ? Renderer.Direction.SouthEast
+                            : Renderer.Direction.NorthEast;
                         break;
             }
 
-            _renderer.Position += d;
+            _renderer.Centre += d;
             _keyPressed = Keys.None;
         }
 
