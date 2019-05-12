@@ -24,8 +24,7 @@ namespace AntAttack
 
         public Vector2 Centre { get; set; }
         public Direction Orientation { get; set; }
-
-    public int HorizontalSize => _sizeH;
+        public int HorizontalSize => _sizeH;
         public int VerticalSize => _sizeV;
         
         
@@ -33,6 +32,7 @@ namespace AntAttack
         public Renderer(Graphics graphics, int size)
         {
             _graphics = graphics;
+            _graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
             
             Centre = new Vector2(400, 0);
             Orientation = Direction.NorthEast;
@@ -56,19 +56,25 @@ namespace AntAttack
                 {
                     for (int x = 0; x < map.Width; x++)
                     {
-                        if ((Orientation == Direction.NorthEast && map.Get(x, y, z) == Map.Wall)
-                            || (Orientation == Direction.SouthEast && map.Get(y, map.Width - x - 1, z) == Map.Wall))
+                        bool isWall = Orientation == Direction.NorthEast
+                            ? map.Get(x, y, z) == Map.Wall
+                            : map.Get(y, map.Width - x - 1, z) == Map.Wall;
+                        
+                        if (isWall)
                         {
-                            Vector2 cubePosition = TransformCoordinates(x, y, z);
-                            DrawCube(this.Centre + cubePosition);
+                            Vector2 cubePosition = this.Centre + TransformCoordinates(x, y, z);
+                            if(isInBounds(cubePosition))
+                                DrawCube(cubePosition);
                         }
                     }
                 }
             }
-            
+           
             // Centre dot (For debugging)
-            brush = new SolidBrush(Colour.Red);
-            _graphics.FillEllipse(brush, 398, 298, 4, 4);
+            SpriteLoader loader = SpriteLoader.GetSpriteLoader();
+            Image img = loader.GetSprite(SpriteLoader.Sprite.Boy, 0);
+            brush = new TextureBrush(img);
+            _graphics.DrawImage(img, new Rectangle(390, 290, 20, 20));
         }
 
         public Vector2 TransformCoordinates(int x, int y, int z)
@@ -77,6 +83,11 @@ namespace AntAttack
                 x * _sizeH - y * _sizeH,
                 (x * _sizeV) / 2 + (y*_sizeV)/2 - z * _sizeV
             );
+        }
+
+        private bool isInBounds(Vector2 v)
+        {
+            return (v.X >= 0 && v.X <= 800) && (v.Y >= 0 && v.Y <= 600);
         }
 
         private void DrawCube(Vector2 pos)
