@@ -16,6 +16,9 @@ namespace AntAttack
         private Graphics _graphics;
         private Renderer _renderer;
         private Map _map;
+        
+        private Boy _boy;
+        
         public Form1()
         {
             InitializeComponent();
@@ -28,9 +31,11 @@ namespace AntAttack
             _renderer = new Renderer(_graphics, 20);
             _map = new Map("AntAttack/Resources/map.txt");
             
-            Boy boy = new Boy();
-            boy.Position = new Vector3(10, 10, 0);
-            _map.AddEntity(boy);
+            _renderer.Centre.Y += 100;
+            
+            _boy = new Boy();
+            _boy.Position = new Vector3(10, 10, 0);
+            _map.AddEntity(_boy);
         }
 
         public void OnTick(object sender, EventArgs e)
@@ -38,20 +43,20 @@ namespace AntAttack
             _renderer.RenderMap(_map);
             canvas.Refresh();
             
-            Vector2 d = new Vector2(0, 0);
+            Vector3 d = new Vector3(0, 0, 0);
             switch (_keyPressed)
             {
                     case Keys.Up: 
-                        d.Y = _renderer.VerticalSize/2;
+                        d.X = -1;
                         break;
                     case Keys.Down:
-                        d.Y = -_renderer.VerticalSize/2;
+                        d.X = 1;
                         break;
-                    case Keys.Left: 
-                        d.X = _renderer.HorizontalSize/2;
+                    case Keys.Left:
+                        d.Y = 1;
                         break;
                     case Keys.Right:
-                        d.X = -_renderer.HorizontalSize/2;
+                        d.Y = -1;
                         break;
                     case Keys.Space:
                         _renderer.Orientation = _renderer.Orientation == Renderer.Direction.NorthEast
@@ -60,7 +65,9 @@ namespace AntAttack
                         break;
             }
 
-            _renderer.Centre += d;
+            _map.Move(_boy, _boy.Position + d);
+            
+            
             _keyPressed = Keys.None;
             
             Time.Tick();

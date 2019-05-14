@@ -8,6 +8,7 @@ namespace AntAttack
     {
         public const char Wall = 'X';
         public const char Entity = 'E';
+        public const char Air = '.';
         
         private int _width, _height, _depth;
         private char[,,] _map;
@@ -46,6 +47,20 @@ namespace AntAttack
         public char Get(int x, int y, int z)
         {
             return _map[x, y, z];
+        }
+
+        public bool Move(Entity entity, Vector3 to)
+        {
+            if (_map[to.X, to.Y, to.Z] == Map.Air)
+            {
+                _entities[to.X, to.Y, to.Z] = entity;
+                _map[to.X, to.Y, to.Z] = Map.Entity;
+                _map[entity.Position.X, entity.Position.Y, entity.Position.Z] = Map.Air;
+                entity.Position = to;
+                return true;
+            }
+
+            return false;
         }
 
         public Entity GetEntity(int x, int y, int z)

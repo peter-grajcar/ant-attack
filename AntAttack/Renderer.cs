@@ -58,6 +58,9 @@ namespace AntAttack
                         bool isWall = Orientation == Direction.NorthEast
                             ? map.Get(x, y, z) == Map.Wall
                             : map.Get(y, map.Width - x - 1, z) == Map.Wall;
+                        bool isEntity = Orientation == Direction.NorthEast
+                            ? map.Get(x, y, z) == Map.Entity
+                            : map.Get(y, map.Width - x - 1, z) == Map.Entity;
                         
                         if (isWall)
                         {
@@ -65,9 +68,20 @@ namespace AntAttack
                             if(isInBounds(cubePosition))
                                 DrawCube(cubePosition);
                         }
-                        else if (map.Get(x, y, z) == Map.Entity)
+                        else if (isEntity)
                         {
-                            DrawEntity(map.GetEntity(x, y, z));
+                            if (Orientation == Direction.NorthEast)
+                            {
+                                Entity entity = map.GetEntity(x, y, z);
+                                Vector2 pos = TransformCoordinates(x, y, z);
+                                DrawEntity(entity, pos);
+                            }
+                            else
+                            {
+                                Entity entity = map.GetEntity(y, map.Width - x - 1, z);
+                                Vector2 pos = TransformCoordinates(x, y, z);
+                                DrawEntity(entity, pos);
+                            }
                         }
                     }
                 }
@@ -120,12 +134,12 @@ namespace AntAttack
             _graphics.FillPolygon(brush3, side3);
         }
 
-        private void DrawEntity(Entity entity)
+        private void DrawEntity(Entity entity, Vector2 pos)
         {
             Image img = entity.GetTexture();
             Brush brush = new TextureBrush(img);
-            Vector2 pos = TransformCoordinates(entity.Position.X, entity.Position.Y, entity.Position.Z);
-            _graphics.DrawImage(img, new Rectangle(pos.X, pos.Y, _sizeH, _sizeV));
+            _graphics.DrawImage(img, new Rectangle(pos.X - _sizeH/2, pos.Y - _sizeV/2, _sizeV + _sizeV/2, _sizeV + _sizeV/2));
+            //_graphics.FillEllipse(new SolidBrush(Colour.Red), pos.X - 2, pos.Y - 2, 4, 4);
         }
     }
 }

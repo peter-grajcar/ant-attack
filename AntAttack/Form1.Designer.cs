@@ -42,7 +42,7 @@ namespace AntAttack
             canvas.Size = new System.Drawing.Size(800, 600);
             canvas.TabIndex = 1;
             canvas.TabStop = false;
-            //
+            //q
             // timer
             //
             timer.Tick += OnTick;
