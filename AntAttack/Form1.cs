@@ -21,14 +21,22 @@ namespace AntAttack
             InitializeComponent();
             timer.Enabled = true;
             
-            _graphics = CreateGraphics();
+            Bitmap canvasBmp = new Bitmap(800, 600);
+            canvas.Image = canvasBmp;
+            
+            _graphics = Graphics.FromImage(canvasBmp);
             _renderer = new Renderer(_graphics, 20);
             _map = new Map("AntAttack/Resources/map.txt");
+            
+            Boy boy = new Boy();
+            boy.Position = new Vector3(10, 10, 0);
+            _map.AddEntity(boy);
         }
 
         public void OnTick(object sender, EventArgs e)
         {
             _renderer.RenderMap(_map);
+            canvas.Refresh();
             
             Vector2 d = new Vector2(0, 0);
             switch (_keyPressed)
@@ -54,6 +62,8 @@ namespace AntAttack
 
             _renderer.Centre += d;
             _keyPressed = Keys.None;
+            
+            Time.Tick();
         }
 
         private Keys _keyPressed;

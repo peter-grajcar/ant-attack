@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace AntAttack
@@ -6,9 +7,11 @@ namespace AntAttack
     public class Map
     {
         public const char Wall = 'X';
+        public const char Entity = 'E';
         
         private int _width, _height, _depth;
         private char[,,] _map;
+        private Entity[,,] _entities;
 
         public int Width => _width;
         public int Height => _height;
@@ -23,6 +26,7 @@ namespace AntAttack
                 _height = int.Parse(streamReader.ReadLine());
                 _depth = int.Parse(streamReader.ReadLine());
                 _map = new char[_width, _height, _depth];
+                _entities = new Entity[_width, _height, _depth];
 
                 for (int z = 0; z < _depth; z++)
                 {
@@ -42,6 +46,17 @@ namespace AntAttack
         public char Get(int x, int y, int z)
         {
             return _map[x, y, z];
+        }
+
+        public Entity GetEntity(int x, int y, int z)
+        {
+            return _entities[x, y, z];
+        }
+
+        public void AddEntity(Entity entity)
+        {
+            _map[entity.Position.X, entity.Position.Y, entity.Position.Z] = Map.Entity;
+            _entities[entity.Position.X, entity.Position.Y, entity.Position.Z] = entity;
         }
         
     }

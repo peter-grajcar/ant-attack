@@ -75,7 +75,9 @@
     <Compile Include="IRenderable.cs" />
     <Compile Include="Renderer.cs" />
     <Compile Include="SpriteLoader.cs" />
+    <Compile Include="Time.cs" />
     <Compile Include="Vector2.cs" />
+    <Compile Include="Vector3.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

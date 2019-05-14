@@ -14,13 +14,10 @@ namespace AntAttack
 
         public enum Sprite
         {
-            Ant,
+            Ant, AntRun,
             Boy, BoyRun, BoyFall, BoyJump, BoyTrip,
             Girl, GirlRun, GirlFall, GirlJump, GirlTrip,
-            Ammo,
-            Granade,
-            Explosion,
-            Airplane
+            Ammo, Granade, Explosion, Airplane
         }
 
         private SpriteLoader()
@@ -62,6 +59,9 @@ namespace AntAttack
             {
                 case Sprite.Ant:
                     rect = new Rectangle(direction*spriteSize,0, spriteSize, spriteSize);
+                    break;
+                case Sprite.AntRun:
+                    rect = new Rectangle((4 + direction)*spriteSize,0, spriteSize, spriteSize);
                     break;
                 case Sprite.Boy:
                     rect = new Rectangle(direction*spriteSize,spriteSize, spriteSize, spriteSize);

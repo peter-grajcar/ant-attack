@@ -48,7 +48,6 @@ namespace AntAttack
             Brush brush = new SolidBrush(Colour.LightGray);
             _graphics.FillRectangle(brush, new Rectangle(0,0, 800, 600));
             
-            
             // Walls
             for (int z = 0; z < map.Depth; z++)
             {
@@ -62,24 +61,22 @@ namespace AntAttack
                         
                         if (isWall)
                         {
-                            Vector2 cubePosition = this.Centre + TransformCoordinates(x, y, z);
+                            Vector2 cubePosition = TransformCoordinates(x, y, z);
                             if(isInBounds(cubePosition))
                                 DrawCube(cubePosition);
+                        }
+                        else if (map.Get(x, y, z) == Map.Entity)
+                        {
+                            DrawEntity(map.GetEntity(x, y, z));
                         }
                     }
                 }
             }
-           
-            // Centre dot (For debugging)
-            SpriteLoader loader = SpriteLoader.GetSpriteLoader();
-            Image img = loader.GetSprite(SpriteLoader.Sprite.Boy, 0);
-            brush = new TextureBrush(img);
-            _graphics.DrawImage(img, new Rectangle(390, 290, 20, 20));
         }
 
         public Vector2 TransformCoordinates(int x, int y, int z)
         {
-            return new Vector2(
+            return this.Centre + new Vector2(
                 x * _sizeH - y * _sizeH,
                 (x * _sizeV) / 2 + (y*_sizeV)/2 - z * _sizeV
             );
@@ -121,6 +118,14 @@ namespace AntAttack
             _graphics.FillPolygon(Orientation == Direction.NorthEast ? brush1 : brush2, side1);
             _graphics.FillPolygon(Orientation == Direction.NorthEast ? brush2 : brush1, side2);
             _graphics.FillPolygon(brush3, side3);
+        }
+
+        private void DrawEntity(Entity entity)
+        {
+            Image img = entity.GetTexture();
+            Brush brush = new TextureBrush(img);
+            Vector2 pos = TransformCoordinates(entity.Position.X, entity.Position.Y, entity.Position.Z);
+            _graphics.DrawImage(img, new Rectangle(pos.X, pos.Y, _sizeH, _sizeV));
         }
     }
 }

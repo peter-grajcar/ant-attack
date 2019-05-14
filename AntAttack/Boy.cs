@@ -1,3 +1,5 @@
+using System.Drawing;
+
 namespace AntAttack
 {
     public class Boy : Entity
@@ -7,9 +9,9 @@ namespace AntAttack
             
         }
         
-        public override void Render(Renderer renderer)
+        public override Bitmap GetTexture()
         {
-            
+            return SpriteLoader.GetSpriteLoader().GetSprite(SpriteLoader.Sprite.Boy, Direction);
         }
 
         public override void Update()

@@ -1,3 +1,4 @@
+using System.Drawing;
 using System.Dynamic;
 
 namespace AntAttack
@@ -12,9 +13,9 @@ namespace AntAttack
             get => _direction;
             set => _direction = value % 4;
         }
-        public Vector2 Position { get; set; }
+        public Vector3 Position { get; set; } = new Vector3(0,0, 0);
         
-        public abstract void Render(Renderer renderer);
+        public abstract Bitmap GetTexture();
 
         public abstract void Update();
     }

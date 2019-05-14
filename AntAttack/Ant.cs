@@ -1,3 +1,5 @@
+using System.Drawing;
+
 namespace AntAttack
 {
     public class Ant : Entity
@@ -6,10 +8,11 @@ namespace AntAttack
         {
             
         }
-        
-        public override void Render(Renderer renderer)
+
+
+        public override Bitmap GetTexture()
         {
-            
+            return null;
         }
 
         public override void Update()

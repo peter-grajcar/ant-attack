@@ -1,4 +1,7 @@
-﻿namespace AntAttack
+﻿using System.Drawing;
+using System.Windows.Forms;
+
+namespace AntAttack
 {
     partial class Form1
     {
@@ -30,11 +33,20 @@
         {
             this.components = new System.ComponentModel.Container();
             timer = new System.Windows.Forms.Timer(this.components);
+            canvas= new PictureBox();
             this.SuspendLayout();
+            //
+            // canvas
+            //
+            canvas.Location = new System.Drawing.Point(0, 0);
+            canvas.Size = new System.Drawing.Size(800, 600);
+            canvas.TabIndex = 1;
+            canvas.TabStop = false;
             //
             // timer
             //
             timer.Tick += OnTick;
+            timer.Interval = 20;
             // 
             // Form1
             //
@@ -44,11 +56,14 @@
             this.Text = "Ant Attack";
             this.ResumeLayout(false);
 
+            this.Controls.Add(canvas);
+            this.ResumeLayout();
         }
 
         #endregion
 
         private System.Windows.Forms.Timer timer;
+        private System.Windows.Forms.PictureBox canvas;
     }
 }
 
