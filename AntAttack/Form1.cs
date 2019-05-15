@@ -33,7 +33,7 @@ namespace AntAttack
             
             _renderer.Centre.Y += 100;
             
-            _boy = new Boy();
+            _boy = new Boy(_map);
             _boy.Position = new Vector3(10, 10, 0);
             _map.AddEntity(_boy);
         }
@@ -43,40 +43,16 @@ namespace AntAttack
             _renderer.RenderMap(_map);
             canvas.Refresh();
             
-            Vector3 d = new Vector3(0, 0, 0);
-            switch (_keyPressed)
-            {
-                    case Keys.Up: 
-                        d.X = -1;
-                        break;
-                    case Keys.Down:
-                        d.X = 1;
-                        break;
-                    case Keys.Left:
-                        d.Y = 1;
-                        break;
-                    case Keys.Right:
-                        d.Y = -1;
-                        break;
-                    case Keys.Space:
-                        _renderer.Orientation = _renderer.Orientation == Renderer.Direction.NorthEast
-                            ? Renderer.Direction.SouthEast
-                            : Renderer.Direction.NorthEast;
-                        break;
-            }
-
-            _map.Move(_boy, _boy.Position + d);
+            _boy.Update();
             
-            
-            _keyPressed = Keys.None;
+            Keyboard.KeyPressed = Keys.None;
             
             Time.Tick();
         }
-
-        private Keys _keyPressed;
+        
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            _keyPressed = keyData;
+            Keyboard.KeyPressed = keyData;
             return base.ProcessCmdKey(ref msg, keyData);
         }
     }

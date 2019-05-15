@@ -4,6 +4,6 @@ namespace AntAttack
 {
     public interface IRenderable
     {
-        Bitmap GetTexture();
+        Bitmap GetTexture(Renderer.Direction direction);
     }
 }

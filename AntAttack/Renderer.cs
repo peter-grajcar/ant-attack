@@ -23,7 +23,7 @@ namespace AntAttack
 
 
         public Vector2 Centre { get; set; }
-        public Direction Orientation { get; set; }
+        public static Direction Orientation { get; set; }
         public int HorizontalSize => _sizeH;
         public int VerticalSize => _sizeV;
         
@@ -86,6 +86,8 @@ namespace AntAttack
                     }
                 }
             }
+            
+            
         }
 
         public Vector2 TransformCoordinates(int x, int y, int z)
@@ -136,9 +138,9 @@ namespace AntAttack
 
         private void DrawEntity(Entity entity, Vector2 pos)
         {
-            Image img = entity.GetTexture();
+            Image img = entity.GetTexture(Orientation);
             Brush brush = new TextureBrush(img);
-            _graphics.DrawImage(img, new Rectangle(pos.X - _sizeH/2, pos.Y - _sizeV/2, _sizeV + _sizeV/2, _sizeV + _sizeV/2));
+            _graphics.DrawImage(img, new Rectangle(pos.X - _sizeH, pos.Y - _sizeV, _sizeV + _sizeV/2, _sizeV + _sizeV/2));
             //_graphics.FillEllipse(new SolidBrush(Colour.Red), pos.X - 2, pos.Y - 2, 4, 4);
         }
     }

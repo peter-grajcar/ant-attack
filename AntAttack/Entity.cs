@@ -6,7 +6,8 @@ namespace AntAttack
     
     public abstract class Entity : IRenderable
     {
-        private int _direction = 0;
+        protected int _direction = 0;
+        protected Map _map;
         
         public int Direction
         {
@@ -14,8 +15,13 @@ namespace AntAttack
             set => _direction = value % 4;
         }
         public Vector3 Position { get; set; } = new Vector3(0,0, 0);
+
+        public Entity(Map map)
+        {
+            _map = map;
+        }
         
-        public abstract Bitmap GetTexture();
+        public abstract Bitmap GetTexture(Renderer.Direction direction);
 
         public abstract void Update();
     }

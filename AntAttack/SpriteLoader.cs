@@ -61,16 +61,19 @@ namespace AntAttack
                     rect = new Rectangle(direction*spriteSize,0, spriteSize, spriteSize);
                     break;
                 case Sprite.AntRun:
-                    rect = new Rectangle((4 + direction)*spriteSize,0, spriteSize, spriteSize);
+                    rect = new Rectangle((3 + direction)*spriteSize,0, spriteSize, spriteSize);
                     break;
                 case Sprite.Boy:
                     rect = new Rectangle(direction*spriteSize,spriteSize, spriteSize, spriteSize);
                     break;
                 case Sprite.BoyRun:
+                    rect = new Rectangle(direction*spriteSize,2*spriteSize, spriteSize, spriteSize);
                     break;
                 case Sprite.BoyFall:
+                    rect = new Rectangle((3 + direction)*spriteSize,spriteSize, spriteSize, spriteSize);
                     break;
                 case Sprite.BoyJump:
+                    rect = new Rectangle((3 + direction)*spriteSize,2*spriteSize, spriteSize, spriteSize);
                     break;
                 case Sprite.BoyTrip:
                     break;
