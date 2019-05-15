@@ -4,15 +4,12 @@ using System.Windows.Forms;
 
 namespace AntAttack
 {
-    public class Boy : Entity
+    public class Boy : Human
     {
-        public enum State { Standing, Running, Jumping, Falling }
-        
-        public State CurrentState { get; set; }
         
         public Boy(Map map) : base(map)
         {
-            CurrentState = State.Standing;
+            
         }
         
         public override Bitmap GetTexture(Renderer.Direction direction)
@@ -77,8 +74,10 @@ namespace AntAttack
                     CurrentState = State.Jumping;
                 else if (d.Z < 0)
                     CurrentState = State.Falling;
-                else
+                else if(CurrentState != State.Running)
                     CurrentState = State.Running;
+                else
+                    CurrentState = State.Standing;
             }
             else
                 CurrentState = State.Standing;

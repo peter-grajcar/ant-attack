@@ -2,7 +2,7 @@ using System.Drawing;
 
 namespace AntAttack
 {
-    public class Girl : Entity
+    public class Girl : Human
     {
 
         public Girl(Map map) : base(map)
@@ -17,7 +17,7 @@ namespace AntAttack
 
         public override void Update()
         {
-            throw new System.NotImplementedException();
+           
         }
     }
 }

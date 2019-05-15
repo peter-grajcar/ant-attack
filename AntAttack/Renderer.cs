@@ -55,32 +55,25 @@ namespace AntAttack
                 {
                     for (int x = 0; x < map.Width; x++)
                     {
-                        bool isWall = Orientation == Direction.NorthEast
-                            ? map.Get(x, y, z) == Map.Wall
-                            : map.Get(y, map.Width - x - 1, z) == Map.Wall;
-                        bool isEntity = Orientation == Direction.NorthEast
-                            ? map.Get(x, y, z) == Map.Entity
-                            : map.Get(y, map.Width - x - 1, z) == Map.Entity;
+                        Vector3 coordinates = new Vector3(x, y, z);
+                        if (Orientation == Direction.SouthEast)
+                            coordinates = new Vector3(y, map.Width - x - 1, z);
                         
-                        if (isWall)
+                        if (map.Get(coordinates) == Map.Wall)
                         {
                             Vector2 cubePosition = TransformCoordinates(x, y, z);
                             if(isInBounds(cubePosition))
                                 DrawCube(cubePosition);
                         }
-                        else if (isEntity)
+                        else if (map.Get(coordinates) == Map.Entity)
                         {
-                            if (Orientation == Direction.NorthEast)
+                            foreach (Entity entity in map.Entities)
                             {
-                                Entity entity = map.GetEntity(x, y, z);
-                                Vector2 pos = TransformCoordinates(x, y, z);
-                                DrawEntity(entity, pos);
-                            }
-                            else
-                            {
-                                Entity entity = map.GetEntity(y, map.Width - x - 1, z);
-                                Vector2 pos = TransformCoordinates(x, y, z);
-                                DrawEntity(entity, pos);
+                                if (entity.Position == coordinates)
+                                {
+                                    Vector2 pos = TransformCoordinates(x, y, z);
+                                    DrawEntity(entity, pos);
+                                }   
                             }
                         }
                     }

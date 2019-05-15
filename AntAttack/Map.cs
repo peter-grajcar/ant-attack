@@ -12,11 +12,12 @@ namespace AntAttack
         
         private int _width, _height, _depth;
         private char[,,] _map;
-        private Entity[,,] _entities;
+        private List<Entity> _entities;
 
         public int Width => _width;
         public int Height => _height;
         public int Depth => _depth;
+        public List<Entity> Entities => _entities;
 
         public Map(string file)
         {
@@ -27,7 +28,7 @@ namespace AntAttack
                 _height = int.Parse(streamReader.ReadLine());
                 _depth = int.Parse(streamReader.ReadLine());
                 _map = new char[_width, _height, _depth];
-                _entities = new Entity[_width, _height, _depth];
+                _entities = new List<Entity>();
 
                 for (int z = 0; z < _depth; z++)
                 {
@@ -54,11 +55,15 @@ namespace AntAttack
             return _map[x, y, z];
         }
 
+        public char Get(Vector3 pos)
+        {
+            return Get(pos.X, pos.Y, pos.Z);
+        }
+
         public bool Move(Entity entity, Vector3 to)
         {
             if (IsOnMap(to) && _map[to.X, to.Y, to.Z] == Map.Air)
             {
-                _entities[to.X, to.Y, to.Z] = entity;
                 _map[to.X, to.Y, to.Z] = Map.Entity;
                 _map[entity.Position.X, entity.Position.Y, entity.Position.Z] = Map.Air;
                 entity.Position = to;
@@ -68,15 +73,10 @@ namespace AntAttack
             return false;
         }
 
-        public Entity GetEntity(int x, int y, int z)
-        {
-            return _entities[x, y, z];
-        }
-
         public void AddEntity(Entity entity)
         {
             _map[entity.Position.X, entity.Position.Y, entity.Position.Z] = Map.Entity;
-            _entities[entity.Position.X, entity.Position.Y, entity.Position.Z] = entity;
+            _entities.Add(entity);
         }
         
     }

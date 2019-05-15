@@ -16,7 +16,7 @@ namespace AntAttack
         }
         public Vector3 Position { get; set; } = new Vector3(0,0, 0);
 
-        public Entity(Map map)
+        protected Entity(Map map)
         {
             _map = map;
         }
