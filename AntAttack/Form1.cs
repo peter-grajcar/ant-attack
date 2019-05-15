@@ -40,13 +40,11 @@ namespace AntAttack
 
         public void OnTick(object sender, EventArgs e)
         {
-            _renderer.RenderMap(_map);
-            canvas.Refresh();
-            
             _boy.Update();
             
             Keyboard.KeyPressed = Keys.None;
-            
+            _renderer.RenderMap(_map);
+            canvas.Refresh();
             Time.Tick();
         }
         

@@ -44,6 +44,11 @@ namespace AntAttack
             }
         }
 
+        private bool IsOnMap(Vector3 pos)
+        {
+            return (pos.X >= 0 && pos.X < Width) && (pos.Y >= 0 && pos.Y < Height) && (pos.Z >= 0 && pos.Z < Depth);
+        }
+
         public char Get(int x, int y, int z)
         {
             return _map[x, y, z];
@@ -51,7 +56,7 @@ namespace AntAttack
 
         public bool Move(Entity entity, Vector3 to)
         {
-            if (_map[to.X, to.Y, to.Z] == Map.Air)
+            if (IsOnMap(to) && _map[to.X, to.Y, to.Z] == Map.Air)
             {
                 _entities[to.X, to.Y, to.Z] = entity;
                 _map[to.X, to.Y, to.Z] = Map.Entity;

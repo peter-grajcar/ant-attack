@@ -64,17 +64,18 @@ namespace AntAttack
                         ? Renderer.Direction.SouthEast
                         : Renderer.Direction.NorthEast;
                     break;
-                default:
-                    if(Position.Z > 0 && _map.Get(Position.X, Position.Y, Position.Z - 1) == Map.Air)
-                        d = new Vector3(0, 0, -1);
-                    break;
             }
+
+            if (CurrentState == State.Jumping)
+                d.Z = 0;
+            else if(Position.Z > 0 && _map.Get(Position.X, Position.Y, Position.Z - 1) == Map.Air)
+                d = new Vector3(0, 0, -1);
 
             if (_map.Move(this, Position + d))
             {
                 if (d.Z > 0)
                     CurrentState = State.Jumping;
-                if (d.Z < 0)
+                else if (d.Z < 0)
                     CurrentState = State.Falling;
                 else
                     CurrentState = State.Running;
