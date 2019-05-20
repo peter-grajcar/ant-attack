@@ -76,6 +76,7 @@ namespace AntAttack
                     rect = new Rectangle((4 + direction)*spriteSize,2*spriteSize, spriteSize, spriteSize);
                     break;
                 case Sprite.BoyTrip:
+                    rect = new Rectangle((8 + direction)*spriteSize,2*spriteSize, spriteSize, spriteSize);
                     break;
                 case Sprite.Girl:
                     rect = new Rectangle(direction*spriteSize,3*spriteSize, spriteSize, spriteSize);
