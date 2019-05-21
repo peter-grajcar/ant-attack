@@ -35,6 +35,7 @@ namespace AntAttack
             
             _boy = new Boy(_map);
             _boy.Position = new Vector3(10, 10, 0);
+            _boy.Controllable = true;
             _map.AddEntity(_boy);
         }
 

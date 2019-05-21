@@ -34,53 +34,8 @@ namespace AntAttack
 
         public override void Update()
         {
-            Vector3 d = new Vector3(0, 0, 0);
-            switch (Keyboard.KeyPressed)
-            {
-                case Keys.Up: 
-                    d.X = -1;
-                    Direction = 2;
-                    break;
-                case Keys.Down:
-                    d.X = 1;
-                    Direction = 0;
-                    break;
-                case Keys.Left:
-                    d.Y = 1;
-                    Direction = 3;
-                    break;
-                case Keys.Right:
-                    d.Y = -1;
-                    Direction = 1;
-                    break;
-                case Keys.C:
-                    d.Z = 1;
-                    break;
-                case Keys.Space:
-                    Renderer.Orientation = Renderer.Orientation == Renderer.Direction.NorthEast
-                        ? Renderer.Direction.SouthEast
-                        : Renderer.Direction.NorthEast;
-                    break;
-            }
-
-            if (CurrentState == State.Jumping)
-                d.Z = 0;
-            else if(Position.Z > 0 && _map.Get(Position.X, Position.Y, Position.Z - 1) == Map.Air)
-                d = new Vector3(0, 0, -1);
-
-            if (_map.Move(this, Position + d))
-            {
-                if (d.Z > 0)
-                    CurrentState = State.Jumping;
-                else if (d.Z < 0)
-                    CurrentState = State.Falling;
-                else if(CurrentState != State.Running)
-                    CurrentState = State.Running;
-                else
-                    CurrentState = State.Standing;
-            }
-            else
-                CurrentState = State.Standing;
+            if(Controllable)
+                Controller.Control(this);
         }
     }
 }
