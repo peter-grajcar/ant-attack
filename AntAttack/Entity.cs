@@ -32,11 +32,11 @@ namespace AntAttack
 
         public void TurnRight()
         {
-            Direction = (Direction + 1) % 4;
+            Direction = (Direction + 3) % 4;
         }
         public void TurnLeft()
         {
-            Direction = (Direction + 3) % 4;
+            Direction = (Direction + 1) % 4;
         }
         public Map GetMap()
         {

@@ -31,11 +31,5 @@ namespace AntAttack
                 
             
         }
-
-        public override void Update()
-        {
-            if(Controllable)
-                Controller.Control(this);
-        }
     }
 }

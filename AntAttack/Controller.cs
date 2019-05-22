@@ -5,29 +5,26 @@ namespace AntAttack
     public class Controller
     {
         
+        public static bool DidMove { get; set;  }
+        
         public static void Control(Human human)
         {
+            DidMove = false;
+            
             Vector3 d = new Vector3(0, 0, 0);
             switch (Keyboard.KeyPressed)
             {
-                case Keys.Up: 
-                    d.X = -1;
-                    human.Direction = 2;
+                case Keys.M: 
+                    human.TurnLeft();
                     break;
-                case Keys.Down:
-                    d.X = 1;
-                    human.Direction = 0;
+                case Keys.Oemcomma:
+                    human.TurnRight();
                     break;
-                case Keys.Left:
-                    d.Y = 1;
-                    human.Direction = 3;
-                    break;
-                case Keys.Right:
-                    d.Y = -1;
-                    human.Direction = 1;
+                case Keys.V:
+                    DidMove |= human.MoveForward();
                     break;
                 case Keys.C:
-                    d.Z = 1;
+                    DidMove |= human.Jump();
                     break;
                 case Keys.Space:
                     Renderer.Orientation = Renderer.Orientation == Renderer.Direction.NorthEast
@@ -35,25 +32,6 @@ namespace AntAttack
                         : Renderer.Direction.NorthEast;
                     break;
             }
-
-            if (human.CurrentState == Human.State.Jumping)
-                d.Z = 0;
-            else if(human.Position.Z > 0 && human.GetMap().Get(human.Position.X, human.Position.Y, human.Position.Z - 1) == Map.Air)
-                d = new Vector3(0, 0, -1);
-
-            if (human.GetMap().Move(human, human.Position + d))
-            {
-                if (d.Z > 0)
-                    human.CurrentState = Human.State.Jumping;
-                else if (d.Z < 0)
-                    human.CurrentState = Human.State.Falling;
-                else if(human.CurrentState != Human.State.Running)
-                    human.CurrentState = Human.State.Running;
-                else
-                    human.CurrentState = Human.State.Standing;
-            }
-            else
-                human.CurrentState = Human.State.Standing;
         }
     }
 }

@@ -17,7 +17,7 @@ namespace AntAttack
             Ant, AntRun,
             Boy, BoyRun, BoyFall, BoyJump, BoyTrip,
             Girl, GirlRun, GirlFall, GirlJump, GirlTrip,
-            Ammo, Granade, Explosion, Airplane
+            Ammo, Grenade, Airplane
         }
 
         private SpriteLoader()
@@ -82,20 +82,25 @@ namespace AntAttack
                     rect = new Rectangle(direction*spriteSize,3*spriteSize, spriteSize, spriteSize);
                     break;
                 case Sprite.GirlRun:
+                    rect = new Rectangle(direction*spriteSize,4*spriteSize, spriteSize, spriteSize);
                     break;
                 case Sprite.GirlFall:
+                    rect = new Rectangle((4 + direction)*spriteSize,3*spriteSize, spriteSize, spriteSize);
                     break;
                 case Sprite.GirlJump:
+                    rect = new Rectangle((4 + direction)*spriteSize,4*spriteSize, spriteSize, spriteSize);
                     break;
                 case Sprite.GirlTrip:
+                    rect = new Rectangle((8 + direction)*spriteSize,3*spriteSize, spriteSize, spriteSize);
                     break;
                 case Sprite.Ammo:
+                    rect = new Rectangle((8 + direction)*spriteSize,3*spriteSize, spriteSize, spriteSize);
                     break;
-                case Sprite.Granade:
-                    break;
-                case Sprite.Explosion:
+                case Sprite.Grenade:
+                    rect = new Rectangle((8 + direction)*spriteSize,spriteSize, spriteSize, spriteSize);
                     break;
                 case Sprite.Airplane:
+                    rect = new Rectangle((8 + direction)*spriteSize,0, spriteSize, spriteSize);
                     break;
             }
             return _sprites.Clone(rect, PixelFormat.DontCare);

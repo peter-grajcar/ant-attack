@@ -17,8 +17,6 @@ namespace AntAttack
         private Renderer _renderer;
         private Map _map;
         
-        private Boy _boy;
-        
         public Form1()
         {
             InitializeComponent();
@@ -33,15 +31,22 @@ namespace AntAttack
             
             _renderer.Centre.Y += 100;
             
-            _boy = new Boy(_map);
-            _boy.Position = new Vector3(10, 10, 0);
-            _boy.Controllable = true;
-            _map.AddEntity(_boy);
+            Boy boy = new Boy(_map);
+            boy.Position = new Vector3(10, 10, 0);
+            boy.Controllable = true;
+            _map.AddEntity(boy);
+            
+            Girl girl = new Girl(_map);
+            girl.Position = new Vector3(9, 15, 4);
+            _map.AddEntity(girl);
         }
 
         public void OnTick(object sender, EventArgs e)
         {
-            _boy.Update();
+            foreach (Entity entity in _map.Entities)
+            {
+                entity.Update();
+            }
             
             Keyboard.KeyPressed = Keys.None;
             _renderer.RenderMap(_map);
