@@ -61,6 +61,8 @@ namespace AntAttack
 
         public char Get(Vector3 pos)
         {
+            if (!IsOnMap(pos))
+                return Map.Air;
             return Get(pos.X, pos.Y, pos.Z);
         }
 
