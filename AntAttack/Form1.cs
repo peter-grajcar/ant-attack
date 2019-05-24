@@ -32,7 +32,7 @@ namespace AntAttack
             _renderer.Centre.Y += 100;
             
             Boy boy = new Boy(_map);
-            boy.Position = new Vector3(10, 10, 0);
+            boy.Position = new Vector3(19, 10, 0);
             boy.Controllable = true;
             _map.AddEntity(boy);
             

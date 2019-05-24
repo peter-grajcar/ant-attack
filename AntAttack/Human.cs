@@ -55,10 +55,9 @@ namespace AntAttack
                                 || CurrentState == State.Jumping)
             {
                 Vector3 f = Position + _forward[Direction];
-                if (_map.Get(f) == Map.Air)
+                if (_map.IsOnMap(f) &&_map.Get(f) == Map.Air)
                 {
                     _map.Move(this, f);
-                    Position = f;
                     
                     if(CurrentState != Human.State.Running)
                         CurrentState = Human.State.Running;

@@ -35,8 +35,10 @@ namespace AntAttack
             if (_timer == distance + 3)
             {
                 _map.RemoveEntity(this);
+                return;
             }
-            else if (_timer >= distance)
+            
+            if (_timer >= distance)
             {
                 Velocity = new Vector3(0, 0, 0);
             }

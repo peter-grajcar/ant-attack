@@ -49,7 +49,7 @@ namespace AntAttack
             }
         }
 
-        private bool IsOnMap(Vector3 pos)
+        public bool IsOnMap(Vector3 pos)
         {
             return (pos.X >= 0 && pos.X < Width) && (pos.Y >= 0 && pos.Y < Height) && (pos.Z >= 0 && pos.Z < Depth);
         }
@@ -61,6 +61,8 @@ namespace AntAttack
 
         public char Get(Vector3 pos)
         {
+            if (pos.Z < 0)
+                return Map.Wall;
             if (!IsOnMap(pos))
                 return Map.Air;
             return Get(pos.X, pos.Y, pos.Z);
