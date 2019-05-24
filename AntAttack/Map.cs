@@ -13,6 +13,8 @@ namespace AntAttack
         private int _width, _height, _depth;
         private char[,,] _map;
         private List<Entity> _entities;
+        private List<Entity> _create;
+        private List<Entity> _destroy;
 
         public int Width => _width;
         public int Height => _height;
@@ -29,6 +31,8 @@ namespace AntAttack
                 _depth = int.Parse(streamReader.ReadLine());
                 _map = new char[_width, _height, _depth];
                 _entities = new List<Entity>();
+                _create = new List<Entity>();
+                _destroy = new List<Entity>();
 
                 for (int z = 0; z < _depth; z++)
                 {
@@ -64,8 +68,8 @@ namespace AntAttack
         {
             if (IsOnMap(to) && _map[to.X, to.Y, to.Z] == Map.Air)
             {
-                _map[to.X, to.Y, to.Z] = Map.Entity;
                 _map[entity.Position.X, entity.Position.Y, entity.Position.Z] = Map.Air;
+                _map[to.X, to.Y, to.Z] = Map.Entity;
                 entity.Position = to;
                 return true;
             }
@@ -76,7 +80,24 @@ namespace AntAttack
         public void AddEntity(Entity entity)
         {
             _map[entity.Position.X, entity.Position.Y, entity.Position.Z] = Map.Entity;
-            _entities.Add(entity);
+            _create.Add(entity);
+        }
+
+        public void CreateAndDestroyEntities()
+        {
+            _entities.AddRange(_create);
+            _create.Clear();
+            foreach (Entity entity in _destroy)
+            {
+                _entities.Remove(entity);
+            }
+            _destroy.Clear();
+        }
+
+        public void RemoveEntity(Entity entity)
+        {
+            _map[entity.Position.X, entity.Position.Y, entity.Position.Z] = Map.Air;
+            _destroy.Add(entity);
         }
         
     }

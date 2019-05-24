@@ -21,6 +21,7 @@ namespace AntAttack
         {
             CurrentState = State.Standing;
             Health = 20;
+            Ammo = 10;
             Controllable = false;
         }
 
@@ -89,6 +90,15 @@ namespace AntAttack
         public bool ThrowGrenade()
         {
             //TODO: implement method
+            if (Ammo > 0)
+            {
+                Ammo--;
+                Grenade grenade = new Grenade(_map);
+                grenade.Position = Position + _forward[Direction];
+                _map.AddEntity(grenade);
+                grenade.Velocity = _forward[Direction];
+                return true;
+            }
             return false;
         }
             

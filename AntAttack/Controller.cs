@@ -26,6 +26,9 @@ namespace AntAttack
                 case Keys.C:
                     DidMove |= human.Jump();
                     break;
+                case Keys.G:
+                    human.ThrowGrenade();
+                    break;
                 case Keys.Space:
                     Renderer.Orientation = Renderer.Orientation == Renderer.Direction.NorthEast
                         ? Renderer.Direction.SouthEast

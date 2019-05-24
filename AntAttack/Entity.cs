@@ -16,6 +16,7 @@ namespace AntAttack
             set => _direction = value % 4;
         }
         
+        /* TODO: this should also do _map.Move() */
         public Vector3 Position { get; set; } = new Vector3(0,0, 0);
 
         

@@ -76,6 +76,9 @@
     <Compile Include="Girl.cs">
       <DependentUpon>Human.cs</DependentUpon>
     </Compile>
+    <Compile Include="Grenade.cs">
+      <DependentUpon>Entity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Human.cs">
       <DependentUpon>Entity.cs</DependentUpon>
     </Compile>

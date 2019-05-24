@@ -43,6 +43,8 @@ namespace AntAttack
 
         public void OnTick(object sender, EventArgs e)
         {
+            _map.CreateAndDestroyEntities();
+            
             foreach (Entity entity in _map.Entities)
             {
                 entity.Update();
