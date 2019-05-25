@@ -7,19 +7,31 @@ namespace AntAttack
     public abstract class Entity : IRenderable
     {
         protected int _direction = 0;
+        protected Vector3 _position = new Vector3(0, 0, 0);
         protected Map _map;
+        
+        protected Vector3[] _forward = { 
+            new Vector3(1, 0,0),
+            new Vector3(0, -1,0),
+            new Vector3(-1, 0,0), 
+            new Vector3(0, 1,0) 
+        };
         
         
         public int Direction
         {
             get => _direction;
             set => _direction = value % 4;
+        }  
+        public Vector3 Position { 
+            get => _position;
+            set { 
+                _map.Move(this, value);
+                _position = value;
+            }
         }
-        
-        /* TODO: this should also do _map.Move() */
-        public Vector3 Position { get; set; } = new Vector3(0,0, 0);
 
-        
+
         protected Entity(Map map)
         {
             _map = map;

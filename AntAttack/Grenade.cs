@@ -50,7 +50,8 @@ namespace AntAttack
                 
                 if (_map.Get(Position + Velocity - new Vector3(0, 0, 1)) == Map.Air)
                     Velocity.Z = -1;
-                _map.Move(this, Position + Velocity);
+                
+                Position += Velocity;
                 Velocity.Z = 0;
             }
             

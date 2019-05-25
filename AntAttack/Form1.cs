@@ -31,6 +31,7 @@ namespace AntAttack
             
             _renderer.Centre.Y += 100;
             
+            // TODO: Load entities from map file
             Boy boy = new Boy(_map);
             boy.Position = new Vector3(19, 10, 0);
             boy.Controllable = true;
@@ -39,6 +40,10 @@ namespace AntAttack
             Girl girl = new Girl(_map);
             girl.Position = new Vector3(9, 15, 4);
             _map.AddEntity(girl);
+            
+            Ant ant = new Ant(_map);
+            ant.Position = new Vector3(10, 10,0);
+            _map.AddEntity(ant);
         }
 
         public void OnTick(object sender, EventArgs e)

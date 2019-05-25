@@ -74,7 +74,6 @@ namespace AntAttack
             {
                 _map[entity.Position.X, entity.Position.Y, entity.Position.Z] = Map.Air;
                 _map[to.X, to.Y, to.Z] = Map.Entity;
-                entity.Position = to;
                 return true;
             }
 
