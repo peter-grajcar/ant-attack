@@ -14,8 +14,8 @@ namespace AntAttack
     public partial class Form1 : Form
     {
         private Graphics _graphics;
-        private Renderer _renderer;
-        private Map _map;
+        public static Renderer Renderer;
+        public static Map Map;
         
         public Form1()
         {
@@ -26,37 +26,37 @@ namespace AntAttack
             canvas.Image = canvasBmp;
             
             _graphics = Graphics.FromImage(canvasBmp);
-            _renderer = new Renderer(_graphics, 20);
-            _map = new Map("AntAttack/Resources/map.txt");
+            Renderer = new Renderer(_graphics, 20);
+            Map = new Map("AntAttack/Resources/map.txt");
             
-            _renderer.Centre.Y += 100;
+            Renderer.Centre.Y += 100;
             
             // TODO: Load entities from map file
-            Boy boy = new Boy(_map);
+            Boy boy = new Boy(Map);
             boy.Position = new Vector3(19, 10, 0);
             boy.Controllable = true;
-            _map.AddEntity(boy);
+            Map.AddEntity(boy);
             
-            Girl girl = new Girl(_map);
+            Girl girl = new Girl(Map);
             girl.Position = new Vector3(9, 15, 4);
-            _map.AddEntity(girl);
+            Map.AddEntity(girl);
             
-            Ant ant = new Ant(_map);
+            Ant ant = new Ant(Map);
             ant.Position = new Vector3(10, 10,0);
-            _map.AddEntity(ant);
+            Map.AddEntity(ant);
         }
 
         public void OnTick(object sender, EventArgs e)
         {
-            _map.CreateAndDestroyEntities();
+            Map.CreateAndDestroyEntities();
             
-            foreach (Entity entity in _map.Entities)
+            foreach (Entity entity in Map.Entities)
             {
                 entity.Update();
             }
             
             Keyboard.KeyPressed = Keys.None;
-            _renderer.RenderMap(_map);
+            Renderer.RenderMap(Map);
             canvas.Refresh();
             Time.Tick();
         }

@@ -23,7 +23,7 @@ namespace AntAttack
 
 
         public Vector2 Centre { get; set; }
-        public static Direction Orientation { get; set; }
+        public Direction Orientation { get; set; }
         public int HorizontalSize => _sizeH;
         public int VerticalSize => _sizeV;
         
@@ -83,9 +83,13 @@ namespace AntAttack
             
         }
 
+        public Vector2 TransformCoordinates(Vector3 pos)
+        {
+            return TransformCoordinates(pos.X, pos.Y, pos.Z);
+        }
         public Vector2 TransformCoordinates(int x, int y, int z)
         {
-            return this.Centre + new Vector2(
+            return Centre + new Vector2(
                 x * _sizeH - y * _sizeH,
                 (x * _sizeV) / 2 + (y*_sizeV)/2 - z * _sizeV
             );

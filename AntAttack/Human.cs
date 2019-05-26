@@ -15,7 +15,7 @@ namespace AntAttack
         {
             CurrentState = State.Standing;
             Health = 20;
-            Ammo = 10;
+            Ammo = 20;
             Controllable = false;
         }
 

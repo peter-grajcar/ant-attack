@@ -4,7 +4,6 @@ namespace AntAttack
 {
     public class Controller
     {
-        
         public static bool DidMove { get; set;  }
         
         public static void Control(Human human)
@@ -21,7 +20,10 @@ namespace AntAttack
                     human.TurnRight();
                     break;
                 case Keys.V:
+                    Vector2 oldPos = Form1.Renderer.TransformCoordinates(human.Position);
                     DidMove |= human.MoveForward();
+                    Vector2 diff = oldPos - Form1.Renderer.TransformCoordinates(human.Position);
+                    Form1.Renderer.Centre += diff;
                     break;
                 case Keys.C:
                     DidMove |= human.Jump();
@@ -30,7 +32,7 @@ namespace AntAttack
                     human.ThrowGrenade();
                     break;
                 case Keys.Space:
-                    Renderer.Orientation = Renderer.Orientation == Renderer.Direction.NorthEast
+                    Form1.Renderer.Orientation = Form1.Renderer.Orientation == Renderer.Direction.NorthEast
                         ? Renderer.Direction.SouthEast
                         : Renderer.Direction.NorthEast;
                     break;
