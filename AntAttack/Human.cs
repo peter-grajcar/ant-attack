@@ -12,7 +12,6 @@ namespace AntAttack
         public int Ammo { get; set; }
         public bool Controllable { get; set; }
         
-        
         protected Human()
         {
             CurrentState = State.Standing;

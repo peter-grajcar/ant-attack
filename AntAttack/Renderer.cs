@@ -110,7 +110,7 @@ namespace AntAttack
 
         private bool isInBounds(Vector2 v)
         {
-            return (v.X >= 0 && v.X <= 800) && (v.Y >= 0 && v.Y <= 600);
+            return (v.X >= 0 - _sizeH && v.X <= 800 + _sizeH) && (v.Y >= 0 - _sizeV && v.Y <= 600 + _sizeV);
         }
 
         private void DrawCube(Vector2 pos)

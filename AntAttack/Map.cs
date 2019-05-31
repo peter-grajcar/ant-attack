@@ -49,25 +49,29 @@ namespace AntAttack
             }
         }
 
+        /*
+         * Validates given position
+         */
         public bool IsOnMap(Vector3 pos)
         {
             return (pos.X >= 0 && pos.X < Width) && (pos.Y >= 0 && pos.Y < Height) && (pos.Z >= 0 && pos.Z < Depth);
         }
-
-        public char Get(int x, int y, int z)
-        {
-            return _map[x, y, z];
-        }
-
+        
+        /*
+         * Returns what is on the map at given position
+         */
         public char Get(Vector3 pos)
         {
             if (pos.Z < 0)
                 return Map.Wall;
             if (!IsOnMap(pos))
                 return Map.Air;
-            return Get(pos.X, pos.Y, pos.Z);
+            return _map[pos.X, pos.Y, pos.Z];
         }
 
+        /*
+         * Moves the entity on the map(but does not change the entity's Position parameter!)
+         */
         public bool Move(Entity entity, Vector3 to)
         {
             if (IsOnMap(to) && _map[to.X, to.Y, to.Z] == Map.Air)
@@ -80,12 +84,19 @@ namespace AntAttack
             return false;
         }
 
+        /*
+         * Adds entity to create list
+         */
         public void AddEntity(Entity entity)
         {
             _map[entity.Position.X, entity.Position.Y, entity.Position.Z] = Map.Entity;
             _create.Add(entity);
         }
 
+        /*
+         * Retrieves entities from create and destroy lists and makes changes
+         * to the main entity list
+         */
         public void CreateAndDestroyEntities()
         {
             _entities.AddRange(_create);
@@ -97,10 +108,26 @@ namespace AntAttack
             _destroy.Clear();
         }
 
+        /*
+         * Adds entity to remove list
+         */
         public void RemoveEntity(Entity entity)
         {
             _map[entity.Position.X, entity.Position.Y, entity.Position.Z] = Map.Air;
             _destroy.Add(entity);
+        }
+
+        /*
+         * Returns next position of the shortest path
+         */
+        public Vector3 FindPath(Vector3 from, Vector3 to)
+        {
+            // TODO: implement this method
+            int[,,] path = new int[Width,Height, Depth];
+            
+            
+            
+            return from;
         }
         
     }

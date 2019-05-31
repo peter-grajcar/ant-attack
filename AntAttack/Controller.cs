@@ -49,7 +49,9 @@ namespace AntAttack
                 diff.X = 1;
             Form1.Renderer.Centre += diff; */
             
-            Form1.Renderer.Centre = human.Position; // Following camera
+            // Following camera
+            Form1.Renderer.Centre.X = human.Position.X;
+            Form1.Renderer.Centre.Y = human.Position.Y;
         }
     }
 }
