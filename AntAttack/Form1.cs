@@ -21,6 +21,8 @@ namespace AntAttack
         {
             InitializeComponent();
             timer.Enabled = true;
+            ConsoleUtil.init();
+            
             
             Bitmap canvasBmp = new Bitmap(800, 600);
             canvas.Image = canvasBmp;

@@ -1,3 +1,5 @@
+using System;
+
 namespace AntAttack
 {
     public abstract class Human : Entity
@@ -21,7 +23,8 @@ namespace AntAttack
 
         public override void Update()
         {
-
+            ConsoleUtil.Clear();
+            
             if (Controllable)
             {
                 Controller.Control(this);

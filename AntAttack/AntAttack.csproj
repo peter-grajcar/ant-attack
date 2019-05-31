@@ -65,6 +65,7 @@
     <Compile Include="Boy.cs">
       <DependentUpon>Human.cs</DependentUpon>
     </Compile>
+    <Compile Include="ConsoleUtil.cs" />
     <Compile Include="Controller.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="Form1.cs">
