@@ -9,7 +9,7 @@ namespace AntAttack
         
         public Vector3 Velocity { get; set; }
 
-        public Grenade(Map map) : base(map)
+        public Grenade()
         {
             _timer = 0;
         }
@@ -34,7 +34,7 @@ namespace AntAttack
         {
             if (_timer == distance + 3)
             {
-                _map.RemoveEntity(this);
+                Form1.Map.RemoveEntity(this);
                 return;
             }
             
@@ -45,10 +45,10 @@ namespace AntAttack
             
             if (_timer > 0)
             {
-                if (_map.Get(Position + Velocity) != Map.Air)
+                if (Form1.Map.Get(Position + Velocity) != Map.Air)
                     Velocity = new Vector3(0, 0, 0);
                 
-                if (_map.Get(Position + Velocity - new Vector3(0, 0, 1)) == Map.Air)
+                if (Form1.Map.Get(Position + Velocity - new Vector3(0, 0, 1)) == Map.Air)
                     Velocity.Z = -1;
                 
                 Position += Velocity;

@@ -11,13 +11,7 @@ namespace AntAttack
         
         public State CurrentState { get; set; }
         public Entity Target { get; set; }
-
         
-        public Ant(Map map) : base(map)
-        {
-            
-        }
-
 
         public override Bitmap GetTexture(Renderer.Direction direction)
         {

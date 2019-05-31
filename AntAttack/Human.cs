@@ -11,7 +11,7 @@ namespace AntAttack
         public bool Controllable { get; set; }
         
         
-        protected Human(Map map) : base(map)
+        protected Human()
         {
             CurrentState = State.Standing;
             Health = 20;
@@ -47,11 +47,11 @@ namespace AntAttack
 
         public bool MoveForward()
         {
-            if (Position.Z == 0 || _map.Get(Position - new Vector3(0, 0, 1)) != Map.Air 
+            if (Position.Z == 0 || Form1.Map.Get(Position - new Vector3(0, 0, 1)) != Map.Air 
                                 || CurrentState == State.Jumping)
             {
                 Vector3 f = Position + _forward[Direction];
-                if (_map.IsOnMap(f) &&_map.Get(f) == Map.Air)
+                if (Form1.Map.IsOnMap(f) &&Form1.Map.Get(f) == Map.Air)
                 {
                     Position = f;
                     
@@ -69,9 +69,9 @@ namespace AntAttack
 
         public bool Jump()
         {
-            if ((Position.Z == 0 || _map.Get(Position - new Vector3(0, 0, 1)) != Map.Air) 
+            if ((Position.Z == 0 || Form1.Map.Get(Position - new Vector3(0, 0, 1)) != Map.Air) 
                 && CurrentState != State.Jumping 
-                && _map.Get(Position + new Vector3(0, 0, 1)) == Map.Air)
+                && Form1.Map.Get(Position + new Vector3(0, 0, 1)) == Map.Air)
             {
                 Position += new Vector3(0, 0, 1);
                 CurrentState = State.Jumping;
@@ -87,9 +87,9 @@ namespace AntAttack
             if (Ammo > 0)
             {
                 Ammo--;
-                Grenade grenade = new Grenade(_map);
+                Grenade grenade = new Grenade();
                 grenade.Position = Position + _forward[Direction];
-                _map.AddEntity(grenade);
+                Form1.Map.AddEntity(grenade);
                 grenade.Velocity = _forward[Direction];
                 return true;
             }
@@ -99,7 +99,7 @@ namespace AntAttack
 
         private bool Fall()
         {
-            if(Position.Z > 0 && _map.Get(Position - new Vector3(0, 0, 1)) == Map.Air)
+            if(Position.Z > 0 && Form1.Map.Get(Position - new Vector3(0, 0, 1)) == Map.Air)
             {
                 Position -= new Vector3(0, 0, 1);
                 CurrentState = State.Falling;

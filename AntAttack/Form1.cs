@@ -26,22 +26,23 @@ namespace AntAttack
             canvas.Image = canvasBmp;
             
             _graphics = Graphics.FromImage(canvasBmp);
-            Renderer = new Renderer(_graphics, 20);
+            Renderer = new Renderer(_graphics, 30);
             Map = new Map("AntAttack/Resources/map.txt");
             
             Renderer.Centre.Y += 100;
             
             // TODO: Load entities from map file
-            Boy boy = new Boy(Map);
+            Boy boy = new Boy();
             boy.Position = new Vector3(19, 10, 0);
             boy.Controllable = true;
             Map.AddEntity(boy);
+            Renderer.Centre = boy.Position;
             
-            Girl girl = new Girl(Map);
+            Girl girl = new Girl();
             girl.Position = new Vector3(9, 15, 4);
             Map.AddEntity(girl);
             
-            Ant ant = new Ant(Map);
+            Ant ant = new Ant();
             ant.Position = new Vector3(10, 10,0);
             Map.AddEntity(ant);
         }

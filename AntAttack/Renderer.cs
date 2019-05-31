@@ -19,10 +19,9 @@ namespace AntAttack
         private Graphics _graphics;
         private int _sizeV; // Horizontal size
         private int _sizeH; // Vertical size
-
-
-
-        public Vector2 Centre { get; set; }
+        
+        // TODO: Centre should be Vector3
+        public Vector3 Centre { get; set; }
         public Direction Orientation { get; set; }
         public int HorizontalSize => _sizeH;
         public int VerticalSize => _sizeV;
@@ -34,7 +33,7 @@ namespace AntAttack
             _graphics = graphics;
             _graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
             
-            Centre = new Vector2(400, 0);
+            Centre = new Vector3(0, 0, 0);
             Orientation = Direction.NorthEast;
 
             _sizeV = size;
@@ -87,9 +86,23 @@ namespace AntAttack
         {
             return TransformCoordinates(pos.X, pos.Y, pos.Z);
         }
+
         public Vector2 TransformCoordinates(int x, int y, int z)
         {
-            return Centre + new Vector2(
+            if (Orientation == Direction.NorthEast)
+            {
+                x -= Centre.X;
+                y -= Centre.Y;
+                z -= Centre.Z;
+            }
+            else
+            {
+                x -= Form1.Map.Width - Centre.Y - 1;
+                y -= Centre.X;
+                z -= Centre.Z;
+            }
+
+        return new Vector2(400, 300) + new Vector2(
                 x * _sizeH - y * _sizeH,
                 (x * _sizeV) / 2 + (y*_sizeV)/2 - z * _sizeV
             );

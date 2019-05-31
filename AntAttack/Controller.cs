@@ -20,10 +20,7 @@ namespace AntAttack
                     human.TurnRight();
                     break;
                 case Keys.V:
-                    Vector2 oldPos = Form1.Renderer.TransformCoordinates(human.Position);
                     DidMove |= human.MoveForward();
-                    Vector2 diff = oldPos - Form1.Renderer.TransformCoordinates(human.Position);
-                    Form1.Renderer.Centre += diff;
                     break;
                 case Keys.C:
                     DidMove |= human.Jump();
@@ -37,6 +34,22 @@ namespace AntAttack
                         : Renderer.Direction.NorthEast;
                     break;
             }
+            
+            // TODO: Fix dynamic camera
+            // Dynamic camera
+            /* Vector2 pos = Form1.Renderer.TransformCoordinates(human.Position);
+            Vector3 diff = new Vector3(0, 0, 0);
+            if(pos.Y < 100)
+                diff.Y = -1;
+            else if(pos.Y > 500)
+                diff.Y = 1;
+            if(pos.X < 100)
+                diff.X = -1;
+            else if(pos.X > 700)
+                diff.X = 1;
+            Form1.Renderer.Centre += diff; */
+            
+            Form1.Renderer.Centre = human.Position; // Following camera
         }
     }
 }

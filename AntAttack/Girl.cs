@@ -4,12 +4,7 @@ namespace AntAttack
 {
     public class Girl : Human
     {
-
-        public Girl(Map map) : base(map)
-        {
-            
-        }
-
+        
         public override Bitmap GetTexture(Renderer.Direction direction)
         {
             int dir = (Direction + (direction == Renderer.Direction.SouthEast ? 3 : 0)) % 4;

@@ -8,7 +8,6 @@ namespace AntAttack
     {
         protected int _direction = 0;
         protected Vector3 _position = new Vector3(0, 0, 0);
-        protected Map _map;
         
         protected Vector3[] _forward = { 
             new Vector3(1, 0,0),
@@ -26,15 +25,9 @@ namespace AntAttack
         public Vector3 Position { 
             get => _position;
             set { 
-                _map.Move(this, value);
+                Form1.Map.Move(this, value);
                 _position = value;
             }
-        }
-
-
-        protected Entity(Map map)
-        {
-            _map = map;
         }
         
         
@@ -47,13 +40,10 @@ namespace AntAttack
         {
             Direction = (Direction + 3) % 4;
         }
+
         public void TurnLeft()
         {
             Direction = (Direction + 1) % 4;
-        }
-        public Map GetMap()
-        {
-            return _map;
         }
     }
 }
