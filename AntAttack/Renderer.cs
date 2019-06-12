@@ -6,7 +6,7 @@ namespace AntAttack
 {
     // God save the Queen and help us all!
     using Colour = Color;
-
+    
     public class Renderer
     {
         public enum Direction
@@ -20,7 +20,6 @@ namespace AntAttack
         private int _sizeV; // Horizontal size
         private int _sizeH; // Vertical size
         
-        // TODO: Centre should be Vector3
         public Vector3 Centre { get; set; }
         public Direction Orientation { get; set; }
         public int HorizontalSize => _sizeH;
@@ -82,6 +81,51 @@ namespace AntAttack
             
         }
 
+        //TODO: Render GUI
+        public void RenderGUI(Human h1, Human h2)
+        {
+            Font font = new Font("Comic Sans MS", 16);
+            _graphics.FillRectangle(Brushes.Black, 0, 390, 800, 210);
+            _graphics.FillRectangle(Brushes.Magenta, 0, 420, 800, 30);
+            _graphics.FillRectangle(Brushes.Magenta, 0, 540, 800, 30);
+            
+            StringFormat format = new StringFormat();
+            format.LineAlignment = StringAlignment.Center;
+            format.Alignment = StringAlignment.Center;
+            
+            _graphics.DrawString("AMMO", font, Brushes.LightGray, new PointF(100, 555), format);
+            _graphics.DrawString("GIRL", font, Brushes.LightGray, new PointF(250, 555), format);
+            _graphics.DrawString("BOY", font, Brushes.LightGray, new PointF(400, 555), format);
+            _graphics.DrawString("TIME", font, Brushes.LightGray, new PointF(550, 555), format);
+            _graphics.DrawString("SCAN", font, Brushes.LightGray, new PointF(700, 555), format);
+            
+            format = new StringFormat();
+            format.LineAlignment = StringAlignment.Center;
+            format.Alignment = StringAlignment.Near;
+            
+            _graphics.FillRectangle(Brushes.Blue, 50, 450, 100, 30);
+            _graphics.FillRectangle(Brushes.LightGray, 50, 480, 100, 30);
+            _graphics.FillRectangle(Brushes.Blue, 50, 510, 100, 30);
+            _graphics.DrawString(h1.Ammo.ToString(), font, Brushes.Black, new PointF(50, 495), format);
+            
+            _graphics.FillRectangle(Brushes.Blue, 200, 450, 100, 30);
+            _graphics.FillRectangle(Brushes.LightGray, 200, 480, 100, 30);
+            _graphics.FillRectangle(Brushes.Blue, 200, 510, 100, 30);
+            _graphics.DrawString(h2.Health.ToString(), font, Brushes.Black, new PointF(200, 495), format);
+            
+            _graphics.FillRectangle(Brushes.Blue, 350, 450, 100, 30);
+            _graphics.FillRectangle(Brushes.LightGray, 350, 480, 100, 30);
+            _graphics.FillRectangle(Brushes.Blue, 350, 510, 100, 30);
+            _graphics.DrawString(h1.Health.ToString(), font, Brushes.Black, new PointF(350, 495), format);
+            
+            _graphics.FillRectangle(Brushes.Blue, 500, 450, 100, 30);
+            _graphics.FillRectangle(Brushes.LightGray, 500, 480, 100, 30);
+            _graphics.FillRectangle(Brushes.Blue, 500, 510, 100, 30);
+            _graphics.DrawString((Time.T / 1000).ToString(), font, Brushes.Black, new PointF(500, 495), format);
+            
+            _graphics.FillRectangle(Brushes.Red, 650, 450, 100, 90);
+        }
+
         public Vector2 TransformCoordinates(Vector3 pos)
         {
             return TransformCoordinates(pos.X, pos.Y, pos.Z);
@@ -102,7 +146,7 @@ namespace AntAttack
                 z -= Centre.Z;
             }
 
-        return new Vector2(400, 300) + new Vector2(
+        return new Vector2(400, 250) + new Vector2(
                 x * _sizeH - y * _sizeH,
                 (x * _sizeV) / 2 + (y*_sizeV)/2 - z * _sizeV
             );

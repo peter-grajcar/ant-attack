@@ -29,6 +29,7 @@ namespace AntAttack
                 _position = value;
             }
         }
+        public bool Paralysed { get; set; }
         
         
         public abstract Bitmap GetTexture(Renderer.Direction direction);
@@ -36,14 +37,16 @@ namespace AntAttack
         public abstract void Update();
 
 
-        public void TurnRight()
+        public bool TurnRight()
         {
             Direction = (Direction + 3) % 4;
+            return true;
         }
 
-        public void TurnLeft()
+        public bool TurnLeft()
         {
             Direction = (Direction + 1) % 4;
+            return true;
         }
     }
 }

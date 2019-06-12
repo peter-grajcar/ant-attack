@@ -16,6 +16,9 @@ namespace AntAttack
         private Graphics _graphics;
         public static Renderer Renderer;
         public static Map Map;
+
+        private Boy boy;
+        private Girl girl;
         
         public Form1()
         {
@@ -34,13 +37,13 @@ namespace AntAttack
             Renderer.Centre.Y += 100;
             
             // TODO: Load entities from map file
-            Boy boy = new Boy();
+            boy = new Boy();
             boy.Position = new Vector3(39, 20, 0);
             boy.Controllable = true;
             Map.AddEntity(boy);
             Renderer.Centre = boy.Position;
             
-            Girl girl = new Girl();
+            girl = new Girl();
             girl.Position = new Vector3(9, 25, 4);
             Map.AddEntity(girl);
             
@@ -62,6 +65,7 @@ namespace AntAttack
             
             Keyboard.KeyPressed = Keys.None;
             Renderer.RenderMap(Map);
+            Renderer.RenderGUI(boy, girl);
             canvas.Refresh();
             Time.Tick();
         }

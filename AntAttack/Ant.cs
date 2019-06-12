@@ -31,6 +31,7 @@ namespace AntAttack
         private ulong lastMove = 0;
         public override void Update()
         {
+            bool didMove = false;
             if (Time.T - lastMove < 200)
                 return;
             
@@ -42,13 +43,16 @@ namespace AntAttack
                 
                 //TODO: fix turning
                 if(Direction - dir > 0)
-                    TurnRight();
+                    didMove |= TurnRight();
                 else if(Direction - dir < 0)
-                    TurnLeft();
+                    didMove |= TurnLeft();
                 else
-                    MoveForward();
+                    didMove |= MoveForward();
 
-                lastMove = Time.T;
+                if (didMove)
+                    lastMove = Time.T;
+                else
+                    CurrentState = Ant.State.Standing;
             }
         }
         
