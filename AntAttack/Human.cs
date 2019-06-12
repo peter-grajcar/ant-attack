@@ -22,8 +22,6 @@ namespace AntAttack
 
         public override void Update()
         {
-            ConsoleUtil.Clear();
-            
             if (Controllable)
             {
                 Controller.Control(this);

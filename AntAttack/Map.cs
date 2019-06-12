@@ -116,19 +116,6 @@ namespace AntAttack
             _map[entity.Position.X, entity.Position.Y, entity.Position.Z] = Map.Air;
             _destroy.Add(entity);
         }
-
-        /*
-         * Returns next position of the shortest path
-         */
-        public Vector3 FindPath(Vector3 from, Vector3 to)
-        {
-            // TODO: implement this method
-            int[,,] path = new int[Width,Height, Depth];
-            
-            
-            
-            return from;
-        }
         
     }
 }

@@ -46,7 +46,9 @@ namespace AntAttack
             
             Ant ant = new Ant();
             ant.Position = new Vector3(10, 20,0);
+            ant.Target = boy;
             Map.AddEntity(ant);
+            
         }
 
         public void OnTick(object sender, EventArgs e)

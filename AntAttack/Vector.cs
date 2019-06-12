@@ -1,3 +1,5 @@
+using System.Text;
+
 namespace AntAttack
 {
     public class Vector2
@@ -51,6 +53,19 @@ namespace AntAttack
         public static bool operator !=(Vector3 u, Vector3 v)
         {
             return !(u == v);
+        }
+
+        public override string ToString()
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.Append("[")
+                .Append(X)
+                .Append(", ")
+                .Append(Y)
+                .Append(", ")
+                .Append(Z)
+                .Append("]");
+            return builder.ToString();
         }
     }
 }
