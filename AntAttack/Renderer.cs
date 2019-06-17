@@ -81,7 +81,8 @@ namespace AntAttack
             
         }
 
-        //TODO: Render GUI
+        private bool blink;
+        private ulong lastBlink;
         public void RenderGUI(Human h1, Human h2)
         {
             Font font = new Font("Comic Sans MS", 16);
@@ -122,8 +123,23 @@ namespace AntAttack
             _graphics.FillRectangle(Brushes.LightGray, 500, 480, 100, 30);
             _graphics.FillRectangle(Brushes.Blue, 500, 510, 100, 30);
             _graphics.DrawString((Time.T / 1000).ToString(), font, Brushes.Black, new PointF(500, 495), format);
-            
-            _graphics.FillRectangle(Brushes.Red, 650, 450, 100, 90);
+
+            double c = 1000.0 / Math.Min(Vector3.Dist(h1.Position, h2.Position) , 50);
+            if (blink && Time.T - lastBlink > 1000 - c)
+            {
+                blink = false;
+                lastBlink = Time.T;
+            }
+            else if (!blink && Vector3.Dist(h1.Position, h2.Position) > 1 && Time.T - lastBlink > c)
+            {
+                blink = true;
+                lastBlink = Time.T;
+            }
+
+            if(blink)
+                _graphics.FillRectangle(Brushes.Red, 650, 450, 100, 90);
+            else
+                _graphics.FillRectangle(Brushes.Lime, 650, 450, 100, 90);
         }
 
         public Vector2 TransformCoordinates(Vector3 pos)

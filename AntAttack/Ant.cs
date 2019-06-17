@@ -32,10 +32,20 @@ namespace AntAttack
         private ulong lastBite = 0;
         public override void Update()
         {
+            if (Form1.Map.Get(Position + new Vector3(0, 0, 1)) == Map.Entity)
+            {
+                Paralysed = 20;
+            }
+            if (Paralysed > 0)
+            {
+                Paralysed--;
+                return;
+            }
+            
             bool didMove = false;
             if (Time.T - lastMove < 200)
                 return;
-            
+
             Vector3 v = FindPath();
             
             if (v != Position)
