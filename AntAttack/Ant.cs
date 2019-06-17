@@ -11,7 +11,7 @@ namespace AntAttack
         
         
         public State CurrentState { get; set; }
-        public Entity Target { get; set; }
+        public Human Target { get; set; }
         
 
         public override Bitmap GetTexture(Renderer.Direction direction)
@@ -29,6 +29,7 @@ namespace AntAttack
         }
 
         private ulong lastMove = 0;
+        private ulong lastBite = 0;
         public override void Update()
         {
             bool didMove = false;
@@ -36,7 +37,7 @@ namespace AntAttack
                 return;
             
             Vector3 v = FindPath();
-
+            
             if (v != Position)
             {
                 int dir = Array.FindIndex(_forward, u => (u == v - Position));
@@ -47,7 +48,11 @@ namespace AntAttack
                 else if(Direction - dir < 0)
                     didMove |= TurnLeft();
                 else
-                    didMove |= MoveForward();
+                {
+                    didMove |= Bite();
+                    if(!didMove)
+                        didMove |= MoveForward();
+                }
 
                 if (didMove)
                     lastMove = Time.T;
@@ -69,6 +74,19 @@ namespace AntAttack
                 return true;
             }
 
+            return false;
+        }
+
+        public bool Bite()
+        {
+            if (Time.T - lastBite > 500 && Target != null && Vector3.Dist(Position, Target.Position) == 1)
+            {
+                Target.Health--;
+
+                CurrentState = Ant.State.Running;
+                lastBite = Time.T;
+                return true;
+            }
             return false;
         }
 

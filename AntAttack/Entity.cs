@@ -29,7 +29,7 @@ namespace AntAttack
                 _position = value;
             }
         }
-        public bool Paralysed { get; set; }
+        public int Paralysed { get; set; }
         
         
         public abstract Bitmap GetTexture(Renderer.Direction direction);

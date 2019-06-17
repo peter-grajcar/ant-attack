@@ -1,10 +1,11 @@
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace AntAttack
 {
     public class Grenade : Entity
     {
-        private const int distance = 4;
+        private const int distance = 3;
         private int _timer;
         
         public Vector3 Velocity { get; set; }
@@ -35,6 +36,16 @@ namespace AntAttack
             if (_timer == distance + 3)
             {
                 Form1.Map.RemoveEntity(this);
+                foreach (Entity entity in Form1.Map.Entities)
+                {
+                    if (entity != this && Vector3.Dist(entity.Position, Position) <= 2)
+                    {
+                        if(entity is Ant)
+                            Form1.Map.RemoveEntity(entity);
+                        else if (entity is Human)
+                            ((Human) entity).Health--;
+                    }
+                }
                 return;
             }
             

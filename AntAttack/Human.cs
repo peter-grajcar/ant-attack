@@ -5,7 +5,7 @@ namespace AntAttack
     public abstract class Human : Entity
     {
         
-        public enum State { Standing, Running, Jumping, Falling }
+        public enum State { Standing, Running, Jumping, Falling, Paralysed }
         
         public State CurrentState { get; set; }
         public int Health { get; set; }
@@ -22,6 +22,13 @@ namespace AntAttack
 
         public override void Update()
         {
+            if (Paralysed > 0)
+            {
+                CurrentState = State.Paralysed;
+                Paralysed--;
+            }
+            
+            
             if (Controllable)
             {
                 Controller.Control(this);

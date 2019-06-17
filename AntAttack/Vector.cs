@@ -1,3 +1,4 @@
+using System;
 using System.Text;
 
 namespace AntAttack
@@ -53,6 +54,11 @@ namespace AntAttack
         public static bool operator !=(Vector3 u, Vector3 v)
         {
             return !(u == v);
+        }
+
+        public static int Dist(Vector3 u, Vector3 v)
+        {
+            return Math.Abs(u.X - v.X) + Math.Abs(u.Y - v.Y) + Math.Abs(u.Z - v.Z);
         }
 
         public override string ToString()

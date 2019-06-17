@@ -20,6 +20,8 @@ namespace AntAttack
                     return SpriteLoader.GetSpriteLoader().GetSprite(SpriteLoader.Sprite.BoyJump, dir);
                 case State.Falling:
                     return SpriteLoader.GetSpriteLoader().GetSprite(SpriteLoader.Sprite.BoyFall, dir);
+                case State.Paralysed:
+                    return SpriteLoader.GetSpriteLoader().GetSprite(SpriteLoader.Sprite.BoyTrip, dir);
                 default:
                     return null;
             }
