@@ -56,6 +56,7 @@ namespace AntAttack
             
         }
 
+        private bool saved = false;
         public void OnTick(object sender, EventArgs e)
         {
             Map.CreateAndDestroyEntities();
@@ -63,6 +64,12 @@ namespace AntAttack
             foreach (Entity entity in Map.Entities)
             {
                 entity.Update();
+            }
+
+            if (!saved && Map.IsSafe(girl) && Map.IsSafe(boy))
+            {
+                Renderer.SetMessage("Congratulations!");
+                saved = true;
             }
             
             Keyboard.KeyPressed = Keys.None;

@@ -9,12 +9,14 @@ namespace AntAttack
         public const char Wall = 'X';
         public const char Entity = 'E';
         public const char Air = '.';
+        public const char SafeZone = 'S';
         
         private int _width, _height, _depth;
         private char[,,] _map;
         private List<Entity> _entities;
         private List<Entity> _create;
         private List<Entity> _destroy;
+        private List<Vector3> _safeSpots;
 
         public int Width => _width;
         public int Height => _height;
@@ -33,6 +35,7 @@ namespace AntAttack
                 _entities = new List<Entity>();
                 _create = new List<Entity>();
                 _destroy = new List<Entity>();
+                _safeSpots = new List<Vector3>();
 
                 for (int z = 0; z < _depth; z++)
                 {
@@ -42,7 +45,15 @@ namespace AntAttack
                         string line = streamReader.ReadLine();
                         for (int x = 0; x < _width; x++)
                         {
-                            _map[x, y, z] = line[x];
+                            if (line[x] == SafeZone)
+                            {
+                                _map[x, y, z] = Air;
+                                _safeSpots.Add(new Vector3(x, y, z));
+                            }
+                            else
+                            {
+                                _map[x, y, z] = line[x];
+                            }
                         }
                     }
                 }
@@ -55,6 +66,11 @@ namespace AntAttack
         public bool IsOnMap(Vector3 pos)
         {
             return (pos.X >= 0 && pos.X < Width) && (pos.Y >= 0 && pos.Y < Height) && (pos.Z >= 0 && pos.Z < Depth);
+        }
+
+        public bool IsSafe(Entity entity)
+        {
+            return _safeSpots.FindIndex(v => v == entity.Position) != -1;
         }
         
         /*
