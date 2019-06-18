@@ -81,9 +81,37 @@ namespace AntAttack
             
         }
 
-        private bool blink;
-        private ulong lastBlink;
-        public void RenderGUI(Human h1, Human h2)
+        private string _text = "";
+        private int _length = 0;
+        private ulong _lastTick = 0;
+
+        public void SetMessage(string text)
+        {
+            _text = text;
+            _length = 0;
+        }
+        public void RenderMessage()
+        {
+            if (Time.T - _lastTick > 50)
+            {
+                if (_length < _text.Length + 10)
+                    _length++;
+                else
+                    _text = "";
+                _lastTick = Time.T;
+            }
+            
+            Font font = new Font("Comic Sans MS", 20);
+            StringFormat format = new StringFormat();
+            format.LineAlignment = StringAlignment.Center;
+            format.Alignment = StringAlignment.Center;
+            
+            _graphics.DrawString(_text.Substring(0, Math.Min(_text.Length,_length)), font, Brushes.Red, new PointF(400, 150), format);
+        }
+
+        private bool _blink;
+        private ulong _lastBlink;
+        public void RenderGui(Human h1, Human h2)
         {
             Font font = new Font("Comic Sans MS", 16);
             _graphics.FillRectangle(Brushes.Black, 0, 390, 800, 210);
@@ -125,18 +153,18 @@ namespace AntAttack
             _graphics.DrawString((Time.T / 1000).ToString(), font, Brushes.Black, new PointF(500, 495), format);
 
             double c = 1000.0 / Math.Min(Vector3.Dist(h1.Position, h2.Position) , 50);
-            if (blink && Time.T - lastBlink > 1000 - c)
+            if (_blink && Time.T - _lastBlink > 1000 - c)
             {
-                blink = false;
-                lastBlink = Time.T;
+                _blink = false;
+                _lastBlink = Time.T;
             }
-            else if (!blink && Vector3.Dist(h1.Position, h2.Position) > 1 && Time.T - lastBlink > c)
+            else if (!_blink && Vector3.Dist(h1.Position, h2.Position) > 1 && Time.T - _lastBlink > c)
             {
-                blink = true;
-                lastBlink = Time.T;
+                _blink = true;
+                _lastBlink = Time.T;
             }
 
-            if(blink)
+            if(_blink)
                 _graphics.FillRectangle(Brushes.Red, 650, 450, 100, 90);
             else
                 _graphics.FillRectangle(Brushes.Lime, 650, 450, 100, 90);

@@ -34,7 +34,7 @@ namespace AntAttack
         {
             if (Form1.Map.Get(Position + new Vector3(0, 0, 1)) == Map.Entity)
             {
-                Paralysed = 20;
+                Paralysed = 40;
             }
             if (Paralysed > 0)
             {

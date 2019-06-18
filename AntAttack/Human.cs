@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace AntAttack
 {
@@ -11,21 +12,26 @@ namespace AntAttack
         public int Health { get; set; }
         public int Ammo { get; set; }
         public bool Controllable { get; set; }
-        
+
+        public Human Follow { get; set; }
+
         protected Human()
         {
             CurrentState = State.Standing;
             Health = 20;
             Ammo = 20;
             Controllable = false;
+            Follow = null;
         }
 
+        private ulong lastMove = 0;
         public override void Update()
         {
             if (Paralysed > 0)
             {
                 CurrentState = State.Paralysed;
                 Paralysed--;
+                return;
             }
             
             
@@ -40,13 +46,53 @@ namespace AntAttack
             }
             else
             {
-                //TODO: implement human AI
-                
                 bool didMove = false;
-                didMove |= Fall();
+                if (Time.T - lastMove < 200)
+                    return;
+                
+                if (Follow == null)
+                {
+                    foreach (Entity entity in Form1.Map.Entities)
+                    {
+                        if (entity != this && entity is Human human &&
+                            Vector3.Dist(human.Position, Position) <= 4)
+                        {
+                            Follow = human;
+                            Form1.Renderer.SetMessage("MY HERO!\n\nTAKE ME AWAY\nFROM ALL OF THIS!");
+                        }
+                    }
+                    
+                }
+                else
+                {
+                    Vector3 v = FindPath();
+                    if (Vector3.Dist(Position, Follow.Position) <= 2)
+                        v = Position;
+
+                    if (v.Z > Position.Z)
+                    {
+                        didMove |= Jump();
+                    }
+                    else if (v.Z == Position.Z && v != Position)
+                    {
+                        int dir = Array.FindIndex(_forward, u => (u == v - Position));
+
+                        if (Direction - dir > 0)
+                            didMove |= TurnRight();
+                        else if (Direction - dir < 0)
+                            didMove |= TurnLeft();
+                        else
+                            didMove |= MoveForward();
+                    }
+                }
+
+                if(!didMove)
+                    didMove |= Fall();
 
                 if (!didMove)
-                    CurrentState = State.Standing;
+                    CurrentState = Follow == null ? State.Paralysed : State.Standing;
+                else
+                    lastMove = Time.T;
             }
 
 
@@ -91,7 +137,7 @@ namespace AntAttack
 
         public bool ThrowGrenade()
         {
-            if (Ammo > 0)
+            if (Ammo > 0 && Form1.Map.Get(Position + _forward[Direction]) == Map.Air)
             {
                 Ammo--;
                 Grenade grenade = new Grenade();
@@ -115,6 +161,64 @@ namespace AntAttack
             }
 
             return false;
+        }
+
+        private Vector3 FindPath()
+        {
+            if (Follow == null)
+                return Position;
+            
+            int[,,] path = new int[Form1.Map.Width, Form1.Map.Height, Form1.Map.Depth];
+
+
+            int dist = 1;
+            Queue<Vector3> queue = new Queue<Vector3>();
+            
+            queue.Enqueue(Follow.Position);
+            path[Follow.Position.X, Follow.Position.Y, Follow.Position.Z] = dist;
+            
+            Vector3[] directions =
+            {
+                new Vector3(1, 0, 0),
+                new Vector3(-1, 0, 0),
+                new Vector3(0, 1, 0),
+                new Vector3(0, -1, 0),
+                new Vector3(0, 0, 1),
+                new Vector3(0, 0, -1),
+            };
+            
+            while (queue.Count != 0 && path[Position.X, Position.Y, Position.Z] == 0)
+            {
+                Vector3 v = queue.Dequeue();
+                dist = path[v.X, v.Y, v.Z];
+                if (dist > 20)
+                    return Position;
+                
+                foreach (Vector3 u in directions)
+                {
+                    Vector3 w = v + u;
+                    if (Form1.Map.IsOnMap(w) && path[w.X, w.Y, w.Z] == 0 && 
+                        (Form1.Map.Get(w) == Map.Air || w == Position))
+                    {
+                        queue.Enqueue(w);
+                        path[w.X, w.Y, w.Z] = dist + 1;
+                    }
+                }
+
+            }
+            
+            dist = path[Position.X, Position.Y, Position.Z];
+            foreach (Vector3 u in directions)
+            {
+                Vector3 w = Position + u;
+                if(Form1.Map.IsOnMap(w))
+                {
+                    if (path[w.X, w.Y, w.Z] == dist - 1)
+                        return Position + u;
+                }
+            }
+            
+            return Position;
         }
     }
 }

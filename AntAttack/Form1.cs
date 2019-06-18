@@ -38,7 +38,7 @@ namespace AntAttack
             
             // TODO: Load entities from map file
             boy = new Boy();
-            boy.Position = new Vector3(39, 20, 0);
+            boy.Position = new Vector3(19, 20, 0);
             boy.Controllable = true;
             Map.AddEntity(boy);
             Renderer.Centre = boy.Position;
@@ -51,6 +51,8 @@ namespace AntAttack
             ant.Position = new Vector3(10, 20,0);
             ant.Target = boy;
             Map.AddEntity(ant);
+            
+            Renderer.SetMessage("Ah shit, here we go again.");
             
         }
 
@@ -65,7 +67,8 @@ namespace AntAttack
             
             Keyboard.KeyPressed = Keys.None;
             Renderer.RenderMap(Map);
-            Renderer.RenderGUI(boy, girl);
+            Renderer.RenderGui(boy, girl);
+            Renderer.RenderMessage();
             canvas.Refresh();
             Time.Tick();
         }

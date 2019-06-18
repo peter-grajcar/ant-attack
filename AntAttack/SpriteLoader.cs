@@ -91,7 +91,7 @@ namespace AntAttack
                     rect = new Rectangle((4 + direction)*spriteSize,4*spriteSize, spriteSize, spriteSize);
                     break;
                 case Sprite.GirlTrip:
-                    rect = new Rectangle((8 + direction)*spriteSize,3*spriteSize, spriteSize, spriteSize);
+                    rect = new Rectangle((8 + direction)*spriteSize,4*spriteSize, spriteSize, spriteSize);
                     break;
                 case Sprite.Ammo:
                     rect = new Rectangle((8 + direction)*spriteSize,3*spriteSize, spriteSize, spriteSize);
