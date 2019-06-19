@@ -5,19 +5,17 @@ namespace AntAttack
     public class Time
     {
         private static DateTime _last = DateTime.Now;
-        private static ulong _t = 0;
-        private static uint _dt = 0;
 
-        public static ulong T => _t;
-        public static uint DeltaT => _dt;
+        public static ulong T { get; set; }
+        public static uint DeltaT { get; set; }
 
         public static void Tick()
         {
             DateTime now = DateTime.Now;
             TimeSpan span = now - _last;
 
-            _dt = (uint) span.TotalMilliseconds;
-            _t += _dt;
+            DeltaT = (uint) span.TotalMilliseconds;
+            T += DeltaT;
 
             _last = now;
         }

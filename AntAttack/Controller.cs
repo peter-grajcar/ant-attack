@@ -2,7 +2,7 @@ using System.Windows.Forms;
 
 namespace AntAttack
 {
-    public class Controller
+    public static class Controller
     {
         public static bool DidMove { get; set;  }
         
@@ -10,7 +10,6 @@ namespace AntAttack
         {
             DidMove = false;
             
-            Vector3 d = new Vector3(0, 0, 0);
             switch (Keyboard.KeyPressed)
             {
                 case Keys.M: 

@@ -28,8 +28,8 @@ namespace AntAttack
             }
         }
 
-        private ulong lastMove = 0;
-        private ulong lastBite = 0;
+        private ulong _lastMove;
+        private ulong _lastBite;
         public override void Update()
         {
             if (Form1.Map.Get(Position + new Vector3(0, 0, 1)) == Map.Entity)
@@ -43,14 +43,14 @@ namespace AntAttack
             }
             
             bool didMove = false;
-            if (Time.T - lastMove < 200)
+            if (Time.T - _lastMove < 200)
                 return;
 
             Vector3 v = FindPath();
             
             if (v != Position)
             {
-                int dir = Array.FindIndex(_forward, u => (u == v - Position));
+                int dir = Array.FindIndex(Forward, u => (u == v - Position));
                 
                 //TODO: fix turning
                 if(Direction - dir > 0)
@@ -65,7 +65,7 @@ namespace AntAttack
                 }
 
                 if (didMove)
-                    lastMove = Time.T;
+                    _lastMove = Time.T;
                 else
                     CurrentState = Ant.State.Standing;
             }
@@ -73,7 +73,7 @@ namespace AntAttack
         
         public bool MoveForward()
         {
-            Vector3 f = Position + _forward[Direction];
+            Vector3 f = Position + Forward[Direction];
             if (Form1.Map.IsOnMap(f) && Form1.Map.Get(f) == Map.Air)
             {
                 Position = f;
@@ -89,12 +89,12 @@ namespace AntAttack
 
         public bool Bite()
         {
-            if (Time.T - lastBite > 500 && Target != null && Vector3.Dist(Position, Target.Position) == 1)
+            if (Time.T - _lastBite > 500 && Target != null && Vector3.Dist(Position, Target.Position) == 1)
             {
                 Target.Health--;
 
                 CurrentState = Ant.State.Running;
-                lastBite = Time.T;
+                _lastBite = Time.T;
                 return true;
             }
             return false;
@@ -122,7 +122,7 @@ namespace AntAttack
                 if (dist > 10)
                     return Position;
                 
-                foreach (Vector3 u in _forward)
+                foreach (Vector3 u in Forward)
                 {
                     Vector2 w = new Vector2(v.X + u.X, v.Y + u.Y);
                     Vector3 w3 = new Vector3(w.X, w.Y, 0);
@@ -138,7 +138,7 @@ namespace AntAttack
                 
 
             dist = path[Position.X, Position.Y];
-            foreach (Vector3 u in _forward)
+            foreach (Vector3 u in Forward)
             {
                 Vector2 w = new Vector2(Position.X + u.X, Position.Y + u.Y);
                 Vector3 w3 = new Vector3(w.X, w.Y, 0);

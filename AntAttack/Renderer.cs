@@ -54,13 +54,14 @@ namespace AntAttack
                     for (int x = 0; x < map.Width; x++)
                     {
                         Vector3 coordinates = new Vector3(x, y, z);
+                        /* Flip coordinates when direction is changed */
                         if (Orientation == Direction.SouthEast)
                             coordinates = new Vector3(y, map.Width - x - 1, z);
                         
                         if (map.Get(coordinates) == Map.Wall)
                         {
                             Vector2 cubePosition = TransformCoordinates(x, y, z);
-                            if(isInBounds(cubePosition))
+                            if(IsInBounds(cubePosition))
                                 DrawCube(cubePosition);
                         }
                         else if (map.Get(coordinates) == Map.Entity)
@@ -77,27 +78,55 @@ namespace AntAttack
                     }
                 }
             }
+        }
+
+        public void RenderMenu()
+        {
+            _graphics.FillRectangle(Brushes.Cyan, new Rectangle(0,0, 800, 600));
+            _graphics.FillRectangle(Brushes.Yellow, new Rectangle(100,100, 600, 400));
+            Pen pen = new Pen(Brushes.Magenta, 20);
+            _graphics.DrawRectangle(pen, new Rectangle(100,100, 600, 400));
             
-            
+            Font font = new Font("Comic Sans MS", 50);
+            StringFormat format = new StringFormat();
+            format.LineAlignment = StringAlignment.Center;
+            format.Alignment = StringAlignment.Center;
+            _graphics.DrawString("ANT ATTACK", font, Brushes.Black, new PointF(400, 250), format);
+
+            _graphics.FillRectangle(Brushes.Black, new Rectangle(200,490, 400, 20));
+           font = new Font("Comic Sans MS", 10);
+            _graphics.DrawString("G i r l   o r   B o y   ( g   /   b ) ?", font, Brushes.Yellow, new PointF(400, 500), format);
         }
 
         private string _text = "";
-        private int _length = 0;
-        private ulong _lastTick = 0;
-
+        private int _length;
+        private ulong _lastTick;
         public void SetMessage(string text)
         {
             _text = text;
             _length = 0;
+            Form1.Paused = true;
         }
+        
+        public bool FinishedMessage()
+        {
+            return _text.Length == 0;
+        }
+        
         public void RenderMessage()
         {
             if (Time.T - _lastTick > 50)
             {
                 if (_length < _text.Length + 10)
+                {
                     _length++;
+                }
                 else
+                {
                     _text = "";
+                    Form1.Paused = false;
+                }
+
                 _lastTick = Time.T;
             }
             
@@ -109,6 +138,8 @@ namespace AntAttack
             _graphics.DrawString(_text.Substring(0, Math.Min(_text.Length,_length)), font, Brushes.Red, new PointF(400, 150), format);
         }
 
+        
+        
         private bool _blink;
         private ulong _lastBlink;
         public void RenderGui(Human h1, Human h2)
@@ -132,26 +163,31 @@ namespace AntAttack
             format.LineAlignment = StringAlignment.Center;
             format.Alignment = StringAlignment.Near;
             
+            /* Ammo */
             _graphics.FillRectangle(Brushes.Blue, 50, 450, 100, 30);
             _graphics.FillRectangle(Brushes.LightGray, 50, 480, 100, 30);
             _graphics.FillRectangle(Brushes.Blue, 50, 510, 100, 30);
             _graphics.DrawString(h1.Ammo.ToString(), font, Brushes.Black, new PointF(50, 495), format);
             
+            /* Girl's Health */
             _graphics.FillRectangle(Brushes.Blue, 200, 450, 100, 30);
             _graphics.FillRectangle(Brushes.LightGray, 200, 480, 100, 30);
             _graphics.FillRectangle(Brushes.Blue, 200, 510, 100, 30);
             _graphics.DrawString(h2.Health.ToString(), font, Brushes.Black, new PointF(200, 495), format);
             
+            /* Boy's Health */
             _graphics.FillRectangle(Brushes.Blue, 350, 450, 100, 30);
             _graphics.FillRectangle(Brushes.LightGray, 350, 480, 100, 30);
             _graphics.FillRectangle(Brushes.Blue, 350, 510, 100, 30);
             _graphics.DrawString(h1.Health.ToString(), font, Brushes.Black, new PointF(350, 495), format);
             
+            /* Time */
             _graphics.FillRectangle(Brushes.Blue, 500, 450, 100, 30);
             _graphics.FillRectangle(Brushes.LightGray, 500, 480, 100, 30);
             _graphics.FillRectangle(Brushes.Blue, 500, 510, 100, 30);
             _graphics.DrawString((Time.T / 1000).ToString(), font, Brushes.Black, new PointF(500, 495), format);
 
+            /* Scanner */
             double c = 1000.0 / Math.Min(Vector3.Dist(h1.Position, h2.Position) , 50);
             if (_blink && Time.T - _lastBlink > 1000 - c)
             {
@@ -170,11 +206,13 @@ namespace AntAttack
                 _graphics.FillRectangle(Brushes.Lime, 650, 450, 100, 90);
         }
 
+        
+        
         public Vector2 TransformCoordinates(Vector3 pos)
         {
             return TransformCoordinates(pos.X, pos.Y, pos.Z);
         }
-
+        
         public Vector2 TransformCoordinates(int x, int y, int z)
         {
             if (Orientation == Direction.NorthEast)
@@ -196,11 +234,13 @@ namespace AntAttack
             );
         }
 
-        private bool isInBounds(Vector2 v)
+        
+        private bool IsInBounds(Vector2 v)
         {
             return (v.X >= 0 - _sizeH && v.X <= 800 + _sizeH) && (v.Y >= 0 - _sizeV && v.Y <= 600 + _sizeV);
         }
 
+        
         private void DrawCube(Vector2 pos)
         {
             Brush brush1, brush2, brush3;
@@ -237,7 +277,6 @@ namespace AntAttack
         private void DrawEntity(Entity entity, Vector2 pos)
         {
             Image img = entity.GetTexture(Orientation);
-            Brush brush = new TextureBrush(img);
             _graphics.DrawImage(img, new Rectangle(pos.X - _sizeH, pos.Y - _sizeV, _sizeV + _sizeV/2, _sizeV + _sizeV/2));
             //_graphics.FillEllipse(new SolidBrush(Colour.Red), pos.X - 2, pos.Y - 2, 4, 4);
         }

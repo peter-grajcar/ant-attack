@@ -1,15 +1,14 @@
 using System.Drawing;
-using System.Dynamic;
 
 namespace AntAttack
 {
     
     public abstract class Entity : IRenderable
     {
-        protected int _direction = 0;
-        protected Vector3 _position = new Vector3(0, 0, 0);
+        private int _direction;
+        private Vector3 _position = new Vector3(0, 0, 0);
         
-        protected Vector3[] _forward = { 
+        protected readonly Vector3[] Forward = { 
             new Vector3(1, 0,0),
             new Vector3(0, -1,0),
             new Vector3(-1, 0,0), 

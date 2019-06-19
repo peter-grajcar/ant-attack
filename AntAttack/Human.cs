@@ -75,7 +75,7 @@ namespace AntAttack
                     }
                     else if (v.Z == Position.Z && v != Position)
                     {
-                        int dir = Array.FindIndex(_forward, u => (u == v - Position));
+                        int dir = Array.FindIndex(Forward, u => (u == v - Position));
 
                         if (Direction - dir > 0)
                             didMove |= TurnRight();
@@ -103,7 +103,7 @@ namespace AntAttack
             if (Position.Z == 0 || Form1.Map.Get(Position - new Vector3(0, 0, 1)) != Map.Air 
                                 || CurrentState == State.Jumping)
             {
-                Vector3 f = Position + _forward[Direction];
+                Vector3 f = Position + Forward[Direction];
                 if (Form1.Map.IsOnMap(f) &&Form1.Map.Get(f) == Map.Air)
                 {
                     Position = f;
@@ -137,13 +137,13 @@ namespace AntAttack
 
         public bool ThrowGrenade()
         {
-            if (Ammo > 0 && Form1.Map.Get(Position + _forward[Direction]) == Map.Air)
+            if (Ammo > 0 && Form1.Map.Get(Position + Forward[Direction]) == Map.Air)
             {
                 Ammo--;
                 Grenade grenade = new Grenade();
-                grenade.Position = Position + _forward[Direction];
+                grenade.Position = Position + Forward[Direction];
                 Form1.Map.AddEntity(grenade);
-                grenade.Velocity = _forward[Direction];
+                grenade.Velocity = Forward[Direction];
                 return true;
             }
             return false;
