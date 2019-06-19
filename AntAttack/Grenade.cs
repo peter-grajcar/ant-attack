@@ -35,13 +35,13 @@ namespace AntAttack
         {
             if (_timer == distance + 3)
             {
-                Form1.Map.RemoveEntity(this);
-                foreach (Entity entity in Form1.Map.Entities)
+                AntAttack.Map.RemoveEntity(this);
+                foreach (Entity entity in AntAttack.Map.Entities)
                 {
                     if (entity != this && Vector3.Dist(entity.Position, Position) <= 2)
                     {
                         if(entity is Ant)
-                            Form1.Map.RemoveEntity(entity);
+                            AntAttack.Map.RemoveEntity(entity);
                         else if (entity is Human)
                             ((Human) entity).Health--;
                     }
@@ -56,10 +56,10 @@ namespace AntAttack
             
             if (_timer > 0)
             {
-                if (Form1.Map.Get(Position + Velocity) != Map.Air)
+                if (AntAttack.Map.Get(Position + Velocity) != Map.Air)
                     Velocity = new Vector3(0, 0, 0);
                 
-                if (Form1.Map.Get(Position + Velocity - new Vector3(0, 0, 1)) == Map.Air)
+                if (AntAttack.Map.Get(Position + Velocity - new Vector3(0, 0, 1)) == Map.Air)
                     Velocity.Z = -1;
                 
                 Position += Velocity;

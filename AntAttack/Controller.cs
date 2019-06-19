@@ -28,7 +28,7 @@ namespace AntAttack
                     human.ThrowGrenade();
                     break;
                 case Keys.Space:
-                    Form1.Renderer.Orientation = Form1.Renderer.Orientation == Renderer.Direction.NorthEast
+                    AntAttack.Renderer.Orientation = AntAttack.Renderer.Orientation == Renderer.Direction.NorthEast
                         ? Renderer.Direction.SouthEast
                         : Renderer.Direction.NorthEast;
                     break;
@@ -49,8 +49,8 @@ namespace AntAttack
             Form1.Renderer.Centre += diff; */
             
             // Following camera
-            Form1.Renderer.Centre.X = human.Position.X;
-            Form1.Renderer.Centre.Y = human.Position.Y;
+            AntAttack.Renderer.Centre.X = human.Position.X;
+            AntAttack.Renderer.Centre.Y = human.Position.Y;
         }
     }
 }

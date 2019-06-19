@@ -109,9 +109,11 @@ namespace AntAttack
             format.Alignment = StringAlignment.Center;
             _graphics.DrawString("ANT ATTACK", font, Brushes.Black, new PointF(400, 250), format);
 
-            _graphics.FillRectangle(Brushes.Black, new Rectangle(200,490, 400, 20));
+            Brush brush1 = (Time.T % 1000 > 500) ? Brushes.Yellow : Brushes.Black;
+            Brush brush2 = (Time.T % 1000 > 500) ? Brushes.Black : Brushes.Yellow;
+            _graphics.FillRectangle(brush1, new Rectangle(200,490, 400, 20));
            font = new Font("Comic Sans MS", 10);
-            _graphics.DrawString("G i r l   o r   B o y   ( g   /   b ) ?", font, Brushes.Yellow, new PointF(400, 500), format);
+            _graphics.DrawString("G i r l   o r   B o y   ( g   /   b ) ?", font, brush2, new PointF(400, 500), format);
         }
 
         public void RenderStats()
@@ -120,6 +122,15 @@ namespace AntAttack
             _graphics.FillRectangle(Brushes.Yellow, new Rectangle(100,100, 600, 400));
             Pen pen = new Pen(Brushes.Magenta, 20);
             _graphics.DrawRectangle(pen, new Rectangle(100,100, 600, 400));
+            
+            Brush brush1 = (Time.T % 1000 > 500) ? Brushes.LightGray : Brushes.Black;
+            Brush brush2 = (Time.T % 1000 > 500) ? Brushes.Black : Brushes.LightGray;
+            StringFormat format = new StringFormat();
+            Font font = new Font("Comic Sans MS", 10);
+            format.LineAlignment = StringAlignment.Center;
+            format.Alignment = StringAlignment.Center;
+            _graphics.FillRectangle(brush1, new Rectangle(200,490, 400, 20));
+            _graphics.DrawString("PRESS ANY KEY ", font, brush2, new PointF(400, 500), format);
         }
 
         private string _text = "";
@@ -129,7 +140,7 @@ namespace AntAttack
         {
             _text = text;
             _length = 0;
-            Form1.Paused = true;
+            AntAttack.Paused = true;
         }
         
         public bool FinishedMessage()
@@ -148,7 +159,7 @@ namespace AntAttack
                 else
                 {
                     _text = "";
-                    Form1.Paused = false;
+                    AntAttack.Paused = false;
                 }
 
                 _lastTick = Time.T;
@@ -247,7 +258,7 @@ namespace AntAttack
             }
             else
             {
-                x -= Form1.Map.Width - Centre.Y - 1;
+                x -= AntAttack.Map.Width - Centre.Y - 1;
                 y -= Centre.X;
                 z -= Centre.Z;
             }

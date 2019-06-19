@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace AntAttack
 {
-    partial class Form1
+    partial class AntAttack
     {
         /// <summary>
         /// Required designer variable.
@@ -52,7 +52,7 @@ namespace AntAttack
             //
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 600);
-            this.Name = "Form1";
+            this.Name = "AntAttack";
             this.Text = "Ant Attack";
             this.ResumeLayout(false);
 

@@ -57,13 +57,13 @@ namespace AntAttack
                 
                 if (Follow == null)
                 {
-                    foreach (Entity entity in Form1.Map.Entities)
+                    foreach (Entity entity in AntAttack.Map.Entities)
                     {
                         if (entity != this && entity is Human human &&
                             Vector3.Dist(human.Position, Position) <= 4)
                         {
                             Follow = human;
-                            Form1.Renderer.SetMessage("MY HERO!\n\nTAKE ME AWAY\nFROM ALL OF THIS!");
+                            AntAttack.Renderer.SetMessage("MY HERO!\n\nTAKE ME AWAY\nFROM ALL OF THIS!");
                         }
                     }
                     
@@ -105,11 +105,11 @@ namespace AntAttack
 
         public bool MoveForward()
         {
-            if (Position.Z == 0 || Form1.Map.Get(Position - new Vector3(0, 0, 1)) != Map.Air 
+            if (Position.Z == 0 || AntAttack.Map.Get(Position - new Vector3(0, 0, 1)) != Map.Air 
                                 || CurrentState == State.Jumping)
             {
                 Vector3 f = Position + Forward[Direction];
-                if (Form1.Map.IsOnMap(f) &&Form1.Map.Get(f) == Map.Air)
+                if (AntAttack.Map.IsOnMap(f) &&AntAttack.Map.Get(f) == Map.Air)
                 {
                     Position = f;
                     
@@ -127,9 +127,9 @@ namespace AntAttack
 
         public bool Jump()
         {
-            if ((Position.Z == 0 || Form1.Map.Get(Position - new Vector3(0, 0, 1)) != Map.Air) 
+            if ((Position.Z == 0 || AntAttack.Map.Get(Position - new Vector3(0, 0, 1)) != Map.Air) 
                 && CurrentState != State.Jumping 
-                && Form1.Map.Get(Position + new Vector3(0, 0, 1)) == Map.Air)
+                && AntAttack.Map.Get(Position + new Vector3(0, 0, 1)) == Map.Air)
             {
                 Position += new Vector3(0, 0, 1);
                 CurrentState = State.Jumping;
@@ -142,12 +142,12 @@ namespace AntAttack
 
         public bool ThrowGrenade()
         {
-            if (Ammo > 0 && Form1.Map.Get(Position + Forward[Direction]) == Map.Air)
+            if (Ammo > 0 && AntAttack.Map.Get(Position + Forward[Direction]) == Map.Air)
             {
                 Ammo--;
                 Grenade grenade = new Grenade();
                 grenade.Position = Position + Forward[Direction];
-                Form1.Map.AddEntity(grenade);
+                AntAttack.Map.AddEntity(grenade);
                 grenade.Velocity = Forward[Direction];
                 return true;
             }
@@ -157,7 +157,7 @@ namespace AntAttack
 
         private bool Fall()
         {
-            if(Position.Z > 0 && Form1.Map.Get(Position - new Vector3(0, 0, 1)) == Map.Air)
+            if(Position.Z > 0 && AntAttack.Map.Get(Position - new Vector3(0, 0, 1)) == Map.Air)
             {
                 Position -= new Vector3(0, 0, 1);
                 CurrentState = State.Falling;
@@ -173,7 +173,7 @@ namespace AntAttack
             if (Follow == null)
                 return Position;
             
-            int[,,] path = new int[Form1.Map.Width, Form1.Map.Height, Form1.Map.Depth];
+            int[,,] path = new int[AntAttack.Map.Width, AntAttack.Map.Height, AntAttack.Map.Depth];
 
 
             int dist = 1;
@@ -202,8 +202,8 @@ namespace AntAttack
                 foreach (Vector3 u in directions)
                 {
                     Vector3 w = v + u;
-                    if (Form1.Map.IsOnMap(w) && path[w.X, w.Y, w.Z] == 0 && 
-                        (Form1.Map.Get(w) == Map.Air || w == Position))
+                    if (AntAttack.Map.IsOnMap(w) && path[w.X, w.Y, w.Z] == 0 && 
+                        (AntAttack.Map.Get(w) == Map.Air || w == Position))
                     {
                         queue.Enqueue(w);
                         path[w.X, w.Y, w.Z] = dist + 1;
@@ -216,7 +216,7 @@ namespace AntAttack
             foreach (Vector3 u in directions)
             {
                 Vector3 w = Position + u;
-                if(Form1.Map.IsOnMap(w))
+                if(AntAttack.Map.IsOnMap(w))
                 {
                     if (path[w.X, w.Y, w.Z] == dist - 1)
                         return Position + u;

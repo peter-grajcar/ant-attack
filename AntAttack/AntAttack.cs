@@ -13,7 +13,7 @@ namespace AntAttack
 {
     using Colour = Color;
     
-    public partial class Form1 : Form
+    public partial class AntAttack : Form
     {
         public enum State
         {
@@ -30,7 +30,7 @@ namespace AntAttack
         private Boy boy;
         private Girl girl;
         
-        public Form1()
+        public AntAttack()
         {
             InitializeComponent();
             timer.Enabled = true;
@@ -120,17 +120,17 @@ namespace AntAttack
                     }
                     else if(_saved)
                     {
-                        if (Time.T - _saveTime > 1200)
+                        if (Time.T - _saveTime > 2400)
                             Renderer.Overlay = Colour.Lime;
-                        else if (Time.T - _saveTime > 1000)
+                        else if (Time.T - _saveTime > 2000)
                             Renderer.Overlay = Colour.Red;
-                        else if (Time.T - _saveTime > 800)
+                        else if (Time.T - _saveTime > 1600)
                             Renderer.Overlay = Colour.Blue;
-                        else if (Time.T - _saveTime > 600)
+                        else if (Time.T - _saveTime > 1200)
                             Renderer.Overlay = Colour.Yellow;
-                        else if (Time.T - _saveTime > 400)
+                        else if (Time.T - _saveTime > 800)
                             Renderer.Overlay = Colour.Magenta;
-                        else if (Time.T - _saveTime > 200)
+                        else if (Time.T - _saveTime > 400)
                             Renderer.Overlay = Colour.Cyan;
                     }
                     

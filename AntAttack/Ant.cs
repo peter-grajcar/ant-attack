@@ -32,7 +32,7 @@ namespace AntAttack
         private ulong _lastBite;
         public override void Update()
         {
-            if (Form1.Map.Get(Position + new Vector3(0, 0, 1)) == Map.Entity)
+            if (AntAttack.Map.Get(Position + new Vector3(0, 0, 1)) == Map.Entity)
             {
                 Paralysed = 40;
             }
@@ -74,7 +74,7 @@ namespace AntAttack
         public bool MoveForward()
         {
             Vector3 f = Position + Forward[Direction];
-            if (Form1.Map.IsOnMap(f) && Form1.Map.Get(f) == Map.Air)
+            if (AntAttack.Map.IsOnMap(f) && AntAttack.Map.Get(f) == Map.Air)
             {
                 Position = f;
                 if(CurrentState != Ant.State.Running)
@@ -105,7 +105,7 @@ namespace AntAttack
             if (Target == null)
                 return Position;
             
-            int[,] path = new int[Form1.Map.Width, Form1.Map.Height];
+            int[,] path = new int[AntAttack.Map.Width, AntAttack.Map.Height];
 
 
             int dist = 1;
@@ -126,8 +126,8 @@ namespace AntAttack
                 {
                     Vector2 w = new Vector2(v.X + u.X, v.Y + u.Y);
                     Vector3 w3 = new Vector3(w.X, w.Y, 0);
-                    if (Form1.Map.IsOnMap(w3) && path[w.X, w.Y] == 0 && 
-                        (Form1.Map.Get(w3) == Map.Air || w3 == Position))
+                    if (AntAttack.Map.IsOnMap(w3) && path[w.X, w.Y] == 0 && 
+                        (AntAttack.Map.Get(w3) == Map.Air || w3 == Position))
                     {
                         queue.Enqueue(w);
                         path[w.X, w.Y] = dist + 1;
@@ -142,7 +142,7 @@ namespace AntAttack
             {
                 Vector2 w = new Vector2(Position.X + u.X, Position.Y + u.Y);
                 Vector3 w3 = new Vector3(w.X, w.Y, 0);
-                if(Form1.Map.IsOnMap(w3))
+                if(AntAttack.Map.IsOnMap(w3))
                 {
                     if (path[w.X, w.Y] == dist - 1)
                         return Position + u;

@@ -24,7 +24,7 @@ namespace AntAttack
         public Vector3 Position { 
             get => _position;
             set { 
-                Form1.Map.Move(this, value);
+                AntAttack.Map.Move(this, value);
                 _position = value;
             }
         }
