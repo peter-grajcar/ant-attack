@@ -24,9 +24,11 @@ namespace AntAttack
         public Direction Orientation { get; set; }
         public int HorizontalSize => _sizeH;
         public int VerticalSize => _sizeV;
-        
-        
-        
+
+        public Colour Overlay { get; set; }
+
+
+
         public Renderer(Graphics graphics, int size)
         {
             _graphics = graphics;
@@ -37,9 +39,11 @@ namespace AntAttack
 
             _sizeV = size;
             _sizeH = (int) Math.Round(Math.Sqrt(3) / 2 * _sizeV);
+
+            Overlay = Colour.Empty;
         }
 
-        
+        private ulong _overlayTimeout;
         public void RenderMap(Map map)
         {
             // Background
@@ -78,6 +82,18 @@ namespace AntAttack
                     }
                 }
             }
+
+            if (Overlay != Colour.Empty)
+            {
+                brush = new SolidBrush(Colour.FromArgb(128, Overlay));
+                _graphics.FillRectangle(brush, new Rectangle(0, 0, 800, 600));
+                if (Time.T - _overlayTimeout > 200)
+                    Overlay = Colour.Empty;
+            }
+            else
+            {
+                _overlayTimeout = Time.T;
+            }
         }
 
         public void RenderMenu()
@@ -96,6 +112,14 @@ namespace AntAttack
             _graphics.FillRectangle(Brushes.Black, new Rectangle(200,490, 400, 20));
            font = new Font("Comic Sans MS", 10);
             _graphics.DrawString("G i r l   o r   B o y   ( g   /   b ) ?", font, Brushes.Yellow, new PointF(400, 500), format);
+        }
+
+        public void RenderStats()
+        {
+            _graphics.FillRectangle(Brushes.Cyan, new Rectangle(0,0, 800, 600));
+            _graphics.FillRectangle(Brushes.Yellow, new Rectangle(100,100, 600, 400));
+            Pen pen = new Pen(Brushes.Magenta, 20);
+            _graphics.DrawRectangle(pen, new Rectangle(100,100, 600, 400));
         }
 
         private string _text = "";

@@ -12,6 +12,7 @@ namespace AntAttack
         public int Health { get; set; }
         public int Ammo { get; set; }
         public bool Controllable { get; set; }
+        public bool WasHit { get; set; }
 
         public Human Follow { get; set; }
 
@@ -22,11 +23,15 @@ namespace AntAttack
             Ammo = 20;
             Controllable = false;
             Follow = null;
+            WasHit = false;
         }
 
-        private ulong lastMove = 0;
+        private ulong _lastMove;
+        private int _lastHealth;
         public override void Update()
         {
+            WasHit = _lastHealth > Health;
+            
             if (Paralysed > 0)
             {
                 CurrentState = State.Paralysed;
@@ -47,7 +52,7 @@ namespace AntAttack
             else
             {
                 bool didMove = false;
-                if (Time.T - lastMove < 200)
+                if (Time.T - _lastMove < 200)
                     return;
                 
                 if (Follow == null)
@@ -92,10 +97,10 @@ namespace AntAttack
                 if (!didMove)
                     CurrentState = Follow == null ? State.Paralysed : State.Standing;
                 else
-                    lastMove = Time.T;
+                    _lastMove = Time.T;
             }
 
-
+            _lastHealth = Health;
         }
 
         public bool MoveForward()

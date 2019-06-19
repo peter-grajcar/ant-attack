@@ -11,6 +11,8 @@ using System.Windows.Forms;
 
 namespace AntAttack
 {
+    using Colour = Color;
+    
     public partial class Form1 : Form
     {
         public enum State
@@ -75,7 +77,8 @@ namespace AntAttack
             CurrentState = State.MENU;
         }
 
-        private bool saved = false;
+        private bool _saved;
+        private ulong _saveTime;
         public void OnTick(object sender, EventArgs e)
         {
             switch (CurrentState)
@@ -105,22 +108,42 @@ namespace AntAttack
                         }
                     }
 
-                    if (!saved && Map.IsSafe(girl) && Map.IsSafe(boy))
+                    if (!_saved && Map.IsSafe(girl) && Map.IsSafe(boy))
                     {
                         Renderer.SetMessage("Congratulations!");
-                        saved = true;
+                        _saved = true;
+                        _saveTime = Time.T;
                     }
-                    else if (saved && Renderer.FinishedMessage())
+                    else if (_saved && Renderer.FinishedMessage())
                     {
                         CurrentState = State.STATS;
                     }
+                    else if(_saved)
+                    {
+                        if (Time.T - _saveTime > 1200)
+                            Renderer.Overlay = Colour.Lime;
+                        else if (Time.T - _saveTime > 1000)
+                            Renderer.Overlay = Colour.Red;
+                        else if (Time.T - _saveTime > 800)
+                            Renderer.Overlay = Colour.Blue;
+                        else if (Time.T - _saveTime > 600)
+                            Renderer.Overlay = Colour.Yellow;
+                        else if (Time.T - _saveTime > 400)
+                            Renderer.Overlay = Colour.Magenta;
+                        else if (Time.T - _saveTime > 200)
+                            Renderer.Overlay = Colour.Cyan;
+                    }
+                    
+                    //TODO: not boy but controllable
+                    if(boy.WasHit)
+                        Renderer.Overlay = Colour.Red;
                     
                     Renderer.RenderMap(Map);
                     Renderer.RenderGui(boy, girl);
                     Renderer.RenderMessage();
                     break;
                 case State.STATS:
-                    
+                    Renderer.RenderStats();
                     break;
             }
             
