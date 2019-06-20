@@ -119,6 +119,7 @@ namespace AntAttack
             _create.Clear();
             foreach (Entity entity in _destroy)
             {
+                _map[entity.Position.X, entity.Position.Y, entity.Position.Z] = Map.Air;
                 _entities.Remove(entity);
             }
             _destroy.Clear();

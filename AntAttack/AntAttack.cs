@@ -64,7 +64,6 @@ namespace AntAttack
             {
                 Ant ant = new Ant();
                 ant.Position = pos;
-                ant.Target = _rescuer;
                 Map.AddEntity(ant);
             }
 

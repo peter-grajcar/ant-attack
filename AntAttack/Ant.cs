@@ -46,10 +46,14 @@ namespace AntAttack
             Human min  = null;
             foreach (Entity entity in AntAttack.Map.Entities)
             {
-                if (entity is Human && (min == null || min.Position.Z > entity.Position.Z ||
-                                        Vector3.Dist(min.Position, Position) < Vector3.Dist(entity.Position, Position)))
+                if (entity is Human human)
                 {
-                    min = (Human) entity;
+                    if (min == null)
+                        min = human;
+                    if(min.Position.Z > human.Position.Z)
+                        min = human;
+                    if(Vector3.Dist(min.Position, Position) < Vector3.Dist(human.Position, Position))
+                        min = human;
                 }
             }
             Target = min;

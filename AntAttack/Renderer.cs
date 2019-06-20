@@ -103,11 +103,17 @@ namespace AntAttack
             Pen pen = new Pen(Brushes.Magenta, 20);
             _graphics.DrawRectangle(pen, new Rectangle(100,100, 600, 400));
             
-            Font font = new Font("Comic Sans MS", 50);
+            Font font = new Font("Comic Sans MS", 15);
+            _graphics.DrawString("WELCOME TO ...", font, Brushes.Black, new RectangleF(150, 150, 500, 20));
+            
+            font = new Font("Comic Sans MS", 50);
             StringFormat format = new StringFormat();
             format.LineAlignment = StringAlignment.Center;
             format.Alignment = StringAlignment.Center;
-            _graphics.DrawString("ANT ATTACK", font, Brushes.Black, new PointF(400, 250), format);
+            _graphics.DrawString("ANT ATTACK", font, Brushes.Black, new PointF(400, 240), format);
+           
+            font = new Font("Comic Sans MS", 15);
+            _graphics.DrawString("AFTER A LONG JOURNEY YOU SEE YOUR DESTINATION. THE HIGH WALLED CITY OF ANTESCHER. AS YOU STAND AT THE GATE YOU HEAR A CALL OF DISTRESS. IRRESISTIBLE TO A HERO LIKE YOU. YOU MUST ANSWER IT ...\nGOOD LUCK!", font, Brushes.Black, new RectangleF(150, 300, 500, 150));
 
             Brush brush1 = (Time.T % 1000 > 500) ? Brushes.LightGray : Brushes.Black;
             Brush brush2 = (Time.T % 1000 > 500) ? Brushes.Black : Brushes.LightGray;
@@ -139,6 +145,19 @@ namespace AntAttack
             _graphics.FillRectangle(Brushes.Yellow, new Rectangle(100,100, 600, 400));
             Pen pen = new Pen(Brushes.Magenta, 20);
             _graphics.DrawRectangle(pen, new Rectangle(100,100, 600, 400));
+            
+            Font font = new Font("Comic Sans MS", 15);
+            _graphics.DrawString("YOU ARE A REAL", font, Brushes.Black, new RectangleF(150, 150, 500, 20));
+            
+            StringFormat format = new StringFormat();
+            format.LineAlignment = StringAlignment.Center;
+            format.Alignment = StringAlignment.Center;
+            font = new Font("Comic Sans MS", 50);
+            _graphics.DrawString("HERO", font, Brushes.Red, new PointF(400, 210), format);
+            
+            font = new Font("Comic Sans MS", 15);
+            _graphics.DrawString("AT LEAST YOUR MISSION IS OVER! YOUR NEW FRIENDS WISH TO THANK YOU FOR SAVING THEIR LIVES.", font, Brushes.Black, new RectangleF(150, 250, 500, 200));
+
         }
 
         private string _text = "";
