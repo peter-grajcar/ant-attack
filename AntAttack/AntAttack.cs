@@ -23,12 +23,12 @@ namespace AntAttack
         private Graphics _graphics;
         public static Renderer Renderer;
         public static Map Map;
+        public static Levels Levels;
         
         public static bool Paused { get; set; }
         public static State CurrentState { get; set; }
 
-        private Boy boy;
-        private Girl girl;
+        private Human _rescuer, _rescuee;
         
         public AntAttack()
         {
@@ -43,10 +43,12 @@ namespace AntAttack
             _graphics = Graphics.FromImage(canvasBmp);
             Renderer = new Renderer(_graphics, 30);
             Map = new Map("AntAttack/Resources/map.txt");
+            Levels = new Levels("AntAttack/Resources/levels.txt");
             
             Renderer.Centre.Y += 100;
             
             // TODO: Load entities from map file
+            /*
             boy = new Boy();
             boy.Position = new Vector3(39, 20, 0);
             boy.Direction = 2;
@@ -71,10 +73,30 @@ namespace AntAttack
             Ant ant3 = new Ant();
             ant3.Position = new Vector3(5, 13,0);
             ant3.Target = boy;
-            Map.AddEntity(ant3);
+            Map.AddEntity(ant3);*/
             
-            Renderer.SetMessage("Ah shit, here we go again.");
             CurrentState = State.MENU;
+        }
+
+        private void initLevel(int i)
+        {
+            Level level = Levels.GetLevel(i);
+            
+            Map.RemoveAllEntities();
+            Map.CreateAndDestroyEntities();
+
+            _rescuee.Position = level.Rescuee;
+            Map.AddEntity(_rescuee);
+            _rescuer.Position = level.Rescuer;
+            Map.AddEntity(_rescuer);
+
+            foreach (Vector3 pos in level.Ants)
+            {
+                Ant ant = new Ant();
+                ant.Position = pos;
+                ant.Target = _rescuer;
+                Map.AddEntity(ant);
+            }
         }
 
         private bool _saved;
@@ -85,16 +107,28 @@ namespace AntAttack
             {
                 case State.MENU:
                     Renderer.RenderMenu();
+                    
+                    bool startGame = false;
                     if (Keyboard.KeyPressed == Keys.G)
                     {
-                     
-                        CurrentState = State.GAME;
-                        Time.T = 0;
+                        _rescuer = new Girl();
+                        _rescuee = new Boy();
+                        startGame = true;
                     }else if (Keyboard.KeyPressed == Keys.B)
                     {
+                        _rescuer = new Boy();
+                        _rescuee = new Girl();
+                        startGame = true;
+                    }
 
-                        CurrentState = State.GAME;
+                    if (startGame)
+                    {
+                        initLevel(0);
                         Time.T = 0;
+                        CurrentState = State.GAME;
+                        _rescuer.Controllable = true;
+                        Renderer.Centre = _rescuer.Position;
+                        Renderer.SetMessage("Ah shit, here we go again.");
                     }
                     break;
                 case State.GAME:
@@ -108,7 +142,7 @@ namespace AntAttack
                         }
                     }
 
-                    if (!_saved && Map.IsSafe(girl) && Map.IsSafe(boy))
+                    if (!_saved && Map.IsSafe(_rescuer) && Map.IsSafe(_rescuee))
                     {
                         Renderer.SetMessage("Congratulations!");
                         _saved = true;
@@ -135,11 +169,11 @@ namespace AntAttack
                     }
                     
                     //TODO: not boy but controllable
-                    if(boy.WasHit)
+                    if(_rescuer.WasHit)
                         Renderer.Overlay = Colour.Red;
                     
                     Renderer.RenderMap(Map);
-                    Renderer.RenderGui(boy, girl);
+                    Renderer.RenderGui(_rescuee, _rescuer);
                     Renderer.RenderMessage();
                     break;
                 case State.STATS:

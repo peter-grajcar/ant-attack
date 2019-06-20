@@ -109,8 +109,8 @@ namespace AntAttack
             format.Alignment = StringAlignment.Center;
             _graphics.DrawString("ANT ATTACK", font, Brushes.Black, new PointF(400, 250), format);
 
-            Brush brush1 = (Time.T % 1000 > 500) ? Brushes.Yellow : Brushes.Black;
-            Brush brush2 = (Time.T % 1000 > 500) ? Brushes.Black : Brushes.Yellow;
+            Brush brush1 = (Time.T % 1000 > 500) ? Brushes.LightGray : Brushes.Black;
+            Brush brush2 = (Time.T % 1000 > 500) ? Brushes.Black : Brushes.LightGray;
             _graphics.FillRectangle(brush1, new Rectangle(200,490, 400, 20));
            font = new Font("Comic Sans MS", 10);
             _graphics.DrawString("G i r l   o r   B o y   ( g   /   b ) ?", font, brush2, new PointF(400, 500), format);
@@ -189,8 +189,8 @@ namespace AntAttack
             format.Alignment = StringAlignment.Center;
             
             _graphics.DrawString("AMMO", font, Brushes.LightGray, new PointF(100, 555), format);
-            _graphics.DrawString("GIRL", font, Brushes.LightGray, new PointF(250, 555), format);
-            _graphics.DrawString("BOY", font, Brushes.LightGray, new PointF(400, 555), format);
+            _graphics.DrawString((h1 is Girl) ? "GIRL" : "BOY", font, Brushes.LightGray, new PointF(250, 555), format);
+            _graphics.DrawString((h1 is Girl) ? "BOY" : "GIRL", font, Brushes.LightGray, new PointF(400, 555), format);
             _graphics.DrawString("TIME", font, Brushes.LightGray, new PointF(550, 555), format);
             _graphics.DrawString("SCAN", font, Brushes.LightGray, new PointF(700, 555), format);
             

@@ -84,6 +84,7 @@
       <DependentUpon>Entity.cs</DependentUpon>
     </Compile>
     <Compile Include="Keyboard.cs" />
+    <Compile Include="Level.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -118,6 +119,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\levels.txt" />
     <Content Include="Resources\map.txt" />
     <Content Include="Resources\sprites.data" />
     <Content Include="Resources\sprites.gif" />

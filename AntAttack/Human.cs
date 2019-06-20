@@ -63,7 +63,7 @@ namespace AntAttack
                             Vector3.Dist(human.Position, Position) <= 4)
                         {
                             Follow = human;
-                            AntAttack.Renderer.SetMessage("MY HERO!\n\nTAKE ME AWAY\nFROM ALL OF THIS!");
+                            AntAttack.Renderer.SetMessage("MY " + (this is Girl ? "HERO" : "HEROINE") + "!\n\nTAKE ME AWAY\nFROM ALL OF THIS!");
                         }
                     }
                     

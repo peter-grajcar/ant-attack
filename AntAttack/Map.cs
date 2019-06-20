@@ -132,6 +132,11 @@ namespace AntAttack
             _map[entity.Position.X, entity.Position.Y, entity.Position.Z] = Map.Air;
             _destroy.Add(entity);
         }
+
+        public void RemoveAllEntities()
+        {
+            _destroy.AddRange(Entities);
+        }
         
     }
 }
