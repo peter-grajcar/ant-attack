@@ -17,7 +17,7 @@ namespace AntAttack
     {
         public enum State
         {
-            MENU, GAME, STATS, END
+            START, GAME, STATS, END
         }
 
         private Graphics _graphics;
@@ -27,6 +27,8 @@ namespace AntAttack
         
         public static bool Paused { get; set; }
         public static State CurrentState { get; set; }
+        public static ulong TimeLeft { get; set; }
+        public static int CurrentLevel { get; set; }
 
         private Human _rescuer, _rescuee;
         
@@ -45,7 +47,7 @@ namespace AntAttack
             Map = new Map("AntAttack/Resources/map.txt");
             Levels = new Levels("AntAttack/Resources/levels.txt");
             
-            CurrentState = State.MENU;
+            CurrentState = State.START;
         }
 
         private void initLevel(int i)
@@ -73,13 +75,12 @@ namespace AntAttack
 
         private bool _saved;
         private ulong _saveTime;
-        private int _currentLevel;
         public void OnTick(object sender, EventArgs e)
         {
             switch (CurrentState)
             {
-                case State.MENU:
-                    Renderer.RenderMenu();
+                case State.START:
+                    Renderer.RenderStart();
                     
                     bool startGame = false;
                     if (Keyboard.KeyPressed == Keys.G)
@@ -96,9 +97,9 @@ namespace AntAttack
 
                     if (startGame)
                     {
-                        _currentLevel = 0;
-                        initLevel(_currentLevel);
-                        Time.T = 0;
+                        CurrentLevel = 0;
+                        initLevel(CurrentLevel);
+                        TimeLeft = 1_000_000;
                         CurrentState = State.GAME;
                         _rescuer.Controllable = true;
                     }
@@ -118,13 +119,13 @@ namespace AntAttack
                     {
                         Renderer.SetMessage("Congratulations!");
                         _saved = true;
-                        _currentLevel++;
+                        CurrentLevel++;
                         _saveTime = Time.T;
                     }
                     else if (_saved && Renderer.FinishedMessage())
                     {
                         Renderer.Overlay = Colour.Empty;
-                        if (_currentLevel < Levels.Count)
+                        if (CurrentLevel < Levels.Count)
                             CurrentState = State.STATS;
                         else
                             CurrentState = State.END;
@@ -155,6 +156,7 @@ namespace AntAttack
                     Renderer.RenderMap(Map);
                     Renderer.RenderGui(_rescuee, _rescuer);
                     Renderer.RenderMessage();
+                    TimeLeft -= Time.DeltaT;
                     break;
                 case State.STATS:
                     Renderer.RenderStats();
@@ -165,7 +167,7 @@ namespace AntAttack
                         _rescuee.Follow = null;
                         _rescuee.Health = 20;
                         CurrentState = State.GAME;
-                        initLevel(_currentLevel);
+                        initLevel(CurrentLevel);
                     }
                     break;
                 case State.END:

@@ -42,7 +42,7 @@ namespace AntAttack
                 return;
             }
             
-           
+           //TODO: fix human search
             Human min  = null;
             foreach (Entity entity in AntAttack.Map.Entities)
             {

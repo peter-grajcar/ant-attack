@@ -96,7 +96,7 @@ namespace AntAttack
             }
         }
 
-        public void RenderMenu()
+        public void RenderStart()
         {
             _graphics.FillRectangle(Brushes.Cyan, new Rectangle(0,0, 800, 600));
             _graphics.FillRectangle(Brushes.Yellow, new Rectangle(100,100, 600, 400));
@@ -129,12 +129,24 @@ namespace AntAttack
             Pen pen = new Pen(Brushes.Magenta, 20);
             _graphics.DrawRectangle(pen, new Rectangle(100,100, 600, 400));
             
-            Brush brush1 = (Time.T % 1000 > 500) ? Brushes.LightGray : Brushes.Black;
-            Brush brush2 = (Time.T % 1000 > 500) ? Brushes.Black : Brushes.LightGray;
             StringFormat format = new StringFormat();
-            Font font = new Font("Comic Sans MS", 10);
             format.LineAlignment = StringAlignment.Center;
             format.Alignment = StringAlignment.Center;
+            
+            Font font = new Font("Comic Sans MS", 15);
+            _graphics.FillRectangle(Brushes.Black, new Rectangle(250,150, 300, 50));
+            _graphics.DrawString("* * * *  ANT ATTACK  * * * *\n* * * *  SCORE CARD * * * *", font, Brushes.LightGray, new PointF(400, 175), format);
+            
+            _graphics.DrawString("LIVES SAVED:", font, Brushes.Blue, new PointF(150, 250));
+            _graphics.DrawString("TIME LEFT:", font, Brushes.Blue, new PointF(150, 300));
+            
+            _graphics.DrawString(AntAttack.CurrentLevel.ToString(), font, Brushes.Blue, new PointF(550, 250));
+            _graphics.DrawString((AntAttack.TimeLeft / 1000).ToString(), font, Brushes.Blue, new PointF(550, 300));
+            
+            Brush brush1 = (Time.T % 1000 > 500) ? Brushes.LightGray : Brushes.Black;
+            Brush brush2 = (Time.T % 1000 > 500) ? Brushes.Black : Brushes.LightGray;
+            
+            font = new Font("Comic Sans MS", 10);
             _graphics.FillRectangle(brush1, new Rectangle(200,490, 400, 20));
             _graphics.DrawString("PRESS ANY KEY ", font, brush2, new PointF(400, 500), format);
         }
@@ -247,7 +259,7 @@ namespace AntAttack
             _graphics.FillRectangle(Brushes.Blue, 500, 450, 100, 30);
             _graphics.FillRectangle(Brushes.LightGray, 500, 480, 100, 30);
             _graphics.FillRectangle(Brushes.Blue, 500, 510, 100, 30);
-            _graphics.DrawString((Time.T / 1000).ToString(), font, Brushes.Black, new PointF(500, 495), format);
+            _graphics.DrawString((AntAttack.TimeLeft / 1000).ToString(), font, Brushes.Black, new PointF(500, 495), format);
 
             /* Scanner */
             double c = 1000.0 / Math.Min(Vector3.Dist(h1.Position, h2.Position) , 50);
