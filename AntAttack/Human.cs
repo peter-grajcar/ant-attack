@@ -196,7 +196,7 @@ namespace AntAttack
             {
                 Vector3 v = queue.Dequeue();
                 dist = path[v.X, v.Y, v.Z];
-                if (dist > 20)
+                if (dist > 50)
                     return Position;
                 
                 foreach (Vector3 u in directions)

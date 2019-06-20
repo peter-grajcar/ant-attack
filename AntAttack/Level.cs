@@ -17,7 +17,9 @@ namespace AntAttack
     public class Levels
     {
         private List<Level> _levels;
-        
+        public int Count => _levels.Count;
+
+
         public Levels(string file)
         {
             _levels = new List<Level>();

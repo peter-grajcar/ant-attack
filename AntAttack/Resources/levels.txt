@@ -8,7 +8,7 @@
 5 13 0 
 ===Level 2===
 39 20 0 #Rescuer's position
-23 15 0  #Rescuee's position
+10 14 0 #Rescuee's position
 5       #Ant Count
 10 20 0 #Ants
 24 10 0

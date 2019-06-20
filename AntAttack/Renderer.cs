@@ -133,6 +133,14 @@ namespace AntAttack
             _graphics.DrawString("PRESS ANY KEY ", font, brush2, new PointF(400, 500), format);
         }
 
+        public void RenderEnd()
+        {
+            _graphics.FillRectangle(Brushes.Cyan, new Rectangle(0,0, 800, 600));
+            _graphics.FillRectangle(Brushes.Yellow, new Rectangle(100,100, 600, 400));
+            Pen pen = new Pen(Brushes.Magenta, 20);
+            _graphics.DrawRectangle(pen, new Rectangle(100,100, 600, 400));
+        }
+
         private string _text = "";
         private int _length;
         private ulong _lastTick;
@@ -202,19 +210,19 @@ namespace AntAttack
             _graphics.FillRectangle(Brushes.Blue, 50, 450, 100, 30);
             _graphics.FillRectangle(Brushes.LightGray, 50, 480, 100, 30);
             _graphics.FillRectangle(Brushes.Blue, 50, 510, 100, 30);
-            _graphics.DrawString(h1.Ammo.ToString(), font, Brushes.Black, new PointF(50, 495), format);
+            _graphics.DrawString(h2.Ammo.ToString(), font, Brushes.Black, new PointF(50, 495), format);
             
             /* Girl's Health */
             _graphics.FillRectangle(Brushes.Blue, 200, 450, 100, 30);
             _graphics.FillRectangle(Brushes.LightGray, 200, 480, 100, 30);
             _graphics.FillRectangle(Brushes.Blue, 200, 510, 100, 30);
-            _graphics.DrawString(h2.Health.ToString(), font, Brushes.Black, new PointF(200, 495), format);
+            _graphics.DrawString(h1.Health.ToString(), font, Brushes.Black, new PointF(200, 495), format);
             
             /* Boy's Health */
             _graphics.FillRectangle(Brushes.Blue, 350, 450, 100, 30);
             _graphics.FillRectangle(Brushes.LightGray, 350, 480, 100, 30);
             _graphics.FillRectangle(Brushes.Blue, 350, 510, 100, 30);
-            _graphics.DrawString(h1.Health.ToString(), font, Brushes.Black, new PointF(350, 495), format);
+            _graphics.DrawString(h2.Health.ToString(), font, Brushes.Black, new PointF(350, 495), format);
             
             /* Time */
             _graphics.FillRectangle(Brushes.Blue, 500, 450, 100, 30);

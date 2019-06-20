@@ -17,7 +17,7 @@ namespace AntAttack
     {
         public enum State
         {
-            MENU, GAME, STATS
+            MENU, GAME, STATS, END
         }
 
         private Graphics _graphics;
@@ -45,36 +45,6 @@ namespace AntAttack
             Map = new Map("AntAttack/Resources/map.txt");
             Levels = new Levels("AntAttack/Resources/levels.txt");
             
-            Renderer.Centre.Y += 100;
-            
-            // TODO: Load entities from map file
-            /*
-            boy = new Boy();
-            boy.Position = new Vector3(39, 20, 0);
-            boy.Direction = 2;
-            boy.Controllable = true;
-            Map.AddEntity(boy);
-            Renderer.Centre = boy.Position;
-            
-            girl = new Girl();
-            girl.Position = new Vector3(9, 25, 4);
-            Map.AddEntity(girl);
-            
-            Ant ant1 = new Ant();
-            ant1.Position = new Vector3(10, 20,0);
-            ant1.Target = boy;
-            Map.AddEntity(ant1);
-            
-            Ant ant2 = new Ant();
-            ant2.Position = new Vector3(24, 10,0);
-            ant2.Target = boy;
-            Map.AddEntity(ant2);
-            
-            Ant ant3 = new Ant();
-            ant3.Position = new Vector3(5, 13,0);
-            ant3.Target = boy;
-            Map.AddEntity(ant3);*/
-            
             CurrentState = State.MENU;
         }
 
@@ -97,10 +67,14 @@ namespace AntAttack
                 ant.Target = _rescuer;
                 Map.AddEntity(ant);
             }
+
+            Renderer.Centre = _rescuer.Position;
+            Renderer.SetMessage("Ah shit, here we go again.");
         }
 
         private bool _saved;
         private ulong _saveTime;
+        private int _currentLevel;
         public void OnTick(object sender, EventArgs e)
         {
             switch (CurrentState)
@@ -123,12 +97,11 @@ namespace AntAttack
 
                     if (startGame)
                     {
-                        initLevel(0);
+                        _currentLevel = 0;
+                        initLevel(_currentLevel);
                         Time.T = 0;
                         CurrentState = State.GAME;
                         _rescuer.Controllable = true;
-                        Renderer.Centre = _rescuer.Position;
-                        Renderer.SetMessage("Ah shit, here we go again.");
                     }
                     break;
                 case State.GAME:
@@ -146,11 +119,16 @@ namespace AntAttack
                     {
                         Renderer.SetMessage("Congratulations!");
                         _saved = true;
+                        _currentLevel++;
                         _saveTime = Time.T;
                     }
                     else if (_saved && Renderer.FinishedMessage())
                     {
-                        CurrentState = State.STATS;
+                        Renderer.Overlay = Colour.Empty;
+                        if (_currentLevel < Levels.Count)
+                            CurrentState = State.STATS;
+                        else
+                            CurrentState = State.END;
                     }
                     else if(_saved)
                     {
@@ -168,9 +146,12 @@ namespace AntAttack
                             Renderer.Overlay = Colour.Cyan;
                     }
                     
-                    //TODO: not boy but controllable
                     if(_rescuer.WasHit)
                         Renderer.Overlay = Colour.Red;
+                    if (_rescuer.Health <= 0 || _rescuee.Health <= 0)
+                    {
+                        CurrentState = State.END;
+                    }
                     
                     Renderer.RenderMap(Map);
                     Renderer.RenderGui(_rescuee, _rescuer);
@@ -178,6 +159,18 @@ namespace AntAttack
                     break;
                 case State.STATS:
                     Renderer.RenderStats();
+
+                    if (Keyboard.KeyPressed != Keys.None)
+                    {
+                        _saved = false;
+                        _rescuee.Follow = null;
+                        _rescuee.Health = 20;
+                        CurrentState = State.GAME;
+                        initLevel(_currentLevel);
+                    }
+                    break;
+                case State.END:
+                    Renderer.RenderEnd();
                     break;
             }
             

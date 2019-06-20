@@ -42,6 +42,18 @@ namespace AntAttack
                 return;
             }
             
+           
+            Human min  = null;
+            foreach (Entity entity in AntAttack.Map.Entities)
+            {
+                if (entity is Human && (min == null || min.Position.Z > entity.Position.Z ||
+                                        Vector3.Dist(min.Position, Position) < Vector3.Dist(entity.Position, Position)))
+                {
+                    min = (Human) entity;
+                }
+            }
+            Target = min;
+            
             bool didMove = false;
             if (Time.T - _lastMove < 200)
                 return;
@@ -119,7 +131,7 @@ namespace AntAttack
             {
                 v = queue.Dequeue();
                 dist = path[v.X, v.Y];
-                if (dist > 10)
+                if (dist > 20)
                     return Position;
                 
                 foreach (Vector3 u in Forward)
