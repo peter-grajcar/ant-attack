@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Xml.Xsl.Runtime;
 
 namespace AntAttack
 {
@@ -32,6 +33,10 @@ namespace AntAttack
         private ulong _lastBite;
         public override void Update()
         {
+            bool didMove = false;
+            if (Time.T - _lastMove < 150)
+                return;
+            
             if (AntAttack.Map.Get(Position + new Vector3(0, 0, 1)) == Map.Entity)
             {
                 Paralysed = 40;
@@ -42,33 +47,44 @@ namespace AntAttack
                 return;
             }
             
-           //TODO: fix human search
             Human min  = null;
             foreach (Entity entity in AntAttack.Map.Entities)
             {
                 if (entity is Human human)
                 {
-                    if (min == null)
-                        min = human;
-                    if(min.Position.Z > human.Position.Z)
-                        min = human;
-                    if(Vector3.Dist(min.Position, Position) < Vector3.Dist(human.Position, Position))
+                    if(human.Position.Z > 0 || (!human.Controllable && human.Follow == null))
+                        continue;
+                    if(min == null || Vector3.Dist(min.Position, Position) < Vector3.Dist(human.Position, Position))
                         min = human;
                 }
             }
             Target = min;
-            
-            bool didMove = false;
-            if (Time.T - _lastMove < 200)
-                return;
 
-            Vector3 v = FindPath();
+            if (Target == null)
+            {
+                Random random = new Random();
+                int n = random.Next(5);
+                switch (n)
+                {
+                   case 0:
+                       TurnLeft();
+                       break;
+                   case 1:
+                       TurnRight();
+                       break;
+                   default:
+                       MoveForward();
+                       break;
+                }
+                return;
+            }
+
+            Vector3 v = FindPath(Target.Position);
             
             if (v != Position)
             {
                 int dir = Array.FindIndex(Forward, u => (u == v - Position));
                 
-                //TODO: fix turning
                 if(Direction - dir > 0)
                     didMove |= TurnRight();
                 else if(Direction - dir < 0)
@@ -116,7 +132,7 @@ namespace AntAttack
             return false;
         }
 
-        private Vector3 FindPath()
+        private Vector3 FindPath(Vector3 to)
         {
             if (Target == null)
                 return Position;
@@ -127,7 +143,7 @@ namespace AntAttack
             int dist = 1;
             Queue<Vector2> queue = new Queue<Vector2>();
             
-            Vector2 v = new Vector2(Target.Position.X, Target.Position.Y);
+            Vector2 v = new Vector2(to.X, to.Y);
             queue.Enqueue(v);
             path[v.X, v.Y] = dist;
             
@@ -135,7 +151,7 @@ namespace AntAttack
             {
                 v = queue.Dequeue();
                 dist = path[v.X, v.Y];
-                if (dist > 20)
+                if (dist > 30)
                     return Position;
                 
                 foreach (Vector3 u in Forward)

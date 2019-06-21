@@ -34,10 +34,11 @@ namespace AntAttack
         
         private Bitmap LoadBitmap()
         {
-            
-            #if _WIN32 || _WIN64
-                Bitmap bmp = Bitmap.FromFile("AntAttack/Resources/sprites.gif");
-            #else
+            /*
+             * Bitmap.FromFile does not work on MacOS
+             */
+            if (Environment.OSVersion.Platform == PlatformID.MacOSX)
+            {
                 Stream stream = new FileStream("AntAttack/Resources/sprites.data", FileMode.Open);
                 Bitmap bmp = new Bitmap(192, 80);
                 for (int x = 0; x < bmp.Width; x++)
@@ -52,8 +53,10 @@ namespace AntAttack
                     }
                 }
                 stream.Close();
-            #endif
-            return bmp;
+            
+                return bmp; 
+            }
+            return (Bitmap) Bitmap.FromFile("AntAttack/Resources/sprites.gif");
         }
 
         public Bitmap GetSprite(Sprite sprite, int direction)

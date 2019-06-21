@@ -146,8 +146,7 @@ namespace AntAttack
                     }
                     break;
                 case State.END:
-                    //TODO: Game over
-                    Renderer.RenderEnd();
+                    Renderer.RenderEnd(_rescuer.Health <= 0 || _rescuee.Health <= 0 || TimeLeft <= 0);
                     break;
             }
             
@@ -182,7 +181,7 @@ namespace AntAttack
             }
 
             Renderer.Centre = _rescuer.Position;
-            Renderer.SetMessage("Ah shit, here we go again.");
+            //Renderer.SetMessage("Ah shit, here we go again.");
         }
     }
 }

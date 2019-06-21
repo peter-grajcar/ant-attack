@@ -102,16 +102,20 @@ namespace AntAttack
             _graphics.FillRectangle(Brushes.Yellow, new Rectangle(100,100, 600, 400));
             Pen pen = new Pen(Brushes.Magenta, 20);
             _graphics.DrawRectangle(pen, new Rectangle(100,100, 600, 400));
-            
-            Font font = new Font("Comic Sans MS", 15);
-            _graphics.DrawString("WELCOME TO ...", font, Brushes.Black, new RectangleF(150, 150, 500, 20));
-            
-            font = new Font("Comic Sans MS", 50);
+
             StringFormat format = new StringFormat();
             format.LineAlignment = StringAlignment.Center;
             format.Alignment = StringAlignment.Center;
-            _graphics.DrawString("ANT ATTACK", font, Brushes.Black, new PointF(400, 240), format);
-           
+            
+            Font font = new Font("Comic Sans MS", 15);
+            _graphics.DrawString("WELCOME TO ...", font, Brushes.Black, new RectangleF(150, 150, 500, 20));
+
+            if (Time.T % 2000 < 1500)
+            {
+                font = new Font("Comic Sans MS", 50);
+                _graphics.DrawString("ANT ATTACK", font, Brushes.Black, new PointF(400, 240), format);
+            }
+            
             font = new Font("Comic Sans MS", 15);
             _graphics.DrawString("AFTER A LONG JOURNEY YOU SEE YOUR DESTINATION. THE HIGH WALLED CITY OF ANTESCHER. AS YOU STAND AT THE GATE YOU HEAR A CALL OF DISTRESS. IRRESISTIBLE TO A HERO LIKE YOU. YOU MUST ANSWER IT ...\nGOOD LUCK!", font, Brushes.Black, new RectangleF(150, 300, 500, 150));
 
@@ -151,25 +155,40 @@ namespace AntAttack
             _graphics.DrawString("PRESS ANY KEY ", font, brush2, new PointF(400, 500), format);
         }
 
-        public void RenderEnd()
+        public void RenderEnd(bool lost)
         {
             _graphics.FillRectangle(Brushes.Cyan, new Rectangle(0,0, 800, 600));
             _graphics.FillRectangle(Brushes.Yellow, new Rectangle(100,100, 600, 400));
             Pen pen = new Pen(Brushes.Magenta, 20);
             _graphics.DrawRectangle(pen, new Rectangle(100,100, 600, 400));
-            
-            Font font = new Font("Comic Sans MS", 15);
-            _graphics.DrawString("YOU ARE A REAL", font, Brushes.Black, new RectangleF(150, 150, 500, 20));
-            
-            StringFormat format = new StringFormat();
-            format.LineAlignment = StringAlignment.Center;
-            format.Alignment = StringAlignment.Center;
-            font = new Font("Comic Sans MS", 50);
-            _graphics.DrawString("HERO", font, Brushes.Red, new PointF(400, 210), format);
-            
-            font = new Font("Comic Sans MS", 15);
-            _graphics.DrawString("AT LEAST YOUR MISSION IS OVER! YOUR NEW FRIENDS WISH TO THANK YOU FOR SAVING THEIR LIVES.", font, Brushes.Black, new RectangleF(150, 250, 500, 200));
 
+            if (lost)
+            {
+                //TODO: Add text
+            }
+            else
+            {
+                Font font = new Font("Comic Sans MS", 15);
+                _graphics.DrawString("YOU ARE A REAL", font, Brushes.Black, new RectangleF(150, 150, 500, 20));
+
+                StringFormat format = new StringFormat();
+                format.LineAlignment = StringAlignment.Center;
+                format.Alignment = StringAlignment.Center;
+                font = new Font("Comic Sans MS", 50);
+                _graphics.DrawString("HERO", font, Brushes.Red, new PointF(400, 210), format);
+
+                font = new Font("Comic Sans MS", 15);
+                _graphics.DrawString(
+                    "AT LEAST YOUR MISSION IS OVER! YOUR NEW FRIENDS WISH TO THANK YOU FOR SAVING THEIR LIVES.", font,
+                    Brushes.Black, new RectangleF(150, 250, 500, 200));
+                
+                _graphics.DrawString("LIVES SAVED:", font, Brushes.Blue, new PointF(150, 400));
+                _graphics.DrawString("TIME LEFT:", font, Brushes.Blue, new PointF(150, 450));
+            
+                _graphics.DrawString(AntAttack.CurrentLevel.ToString(), font, Brushes.Blue, new PointF(550, 400));
+                _graphics.DrawString((AntAttack.TimeLeft / 1000).ToString(), font, Brushes.Blue, new PointF(550, 450));
+
+            }
         }
 
         private string _text = "";

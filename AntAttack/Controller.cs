@@ -34,21 +34,6 @@ namespace AntAttack
                     break;
             }
             
-            // TODO: Fix dynamic camera
-            // Dynamic camera
-            /* Vector2 pos = Form1.Renderer.TransformCoordinates(human.Position);
-            Vector3 diff = new Vector3(0, 0, 0);
-            if(pos.Y < 100)
-                diff.Y = -1;
-            else if(pos.Y > 500)
-                diff.Y = 1;
-            if(pos.X < 100)
-                diff.X = -1;
-            else if(pos.X > 700)
-                diff.X = 1;
-            Form1.Renderer.Centre += diff; */
-            
-            // Following camera
             AntAttack.Renderer.Centre.X = human.Position.X;
             AntAttack.Renderer.Centre.Y = human.Position.Y;
         }

@@ -52,7 +52,7 @@ namespace AntAttack
             else
             {
                 bool didMove = false;
-                if (Time.T - _lastMove < 200)
+                if (Time.T - _lastMove < 150)
                     return;
                 
                 if (Follow == null)
