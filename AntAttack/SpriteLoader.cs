@@ -34,21 +34,25 @@ namespace AntAttack
         
         private Bitmap LoadBitmap()
         {
-            Stream stream = new FileStream("AntAttack/Resources/sprites.data", FileMode.Open);
-            Bitmap bmp = new Bitmap(192, 80);
-            for (int x = 0; x < bmp.Width; x++)
-            {
-                for (int y = 0; y < bmp.Height; y++)
+            
+            #if _WIN32 || _WIN64
+                Bitmap bmp = Bitmap.FromFile("AntAttack/Resources/sprites.gif");
+            #else
+                Stream stream = new FileStream("AntAttack/Resources/sprites.data", FileMode.Open);
+                Bitmap bmp = new Bitmap(192, 80);
+                for (int x = 0; x < bmp.Width; x++)
                 {
-                    byte a = (byte) stream.ReadByte();
-                    byte r = (byte) stream.ReadByte();
-                    byte g = (byte) stream.ReadByte();
-                    byte b = (byte) stream.ReadByte();
-                    bmp.SetPixel(x, y, Color.FromArgb(a, r, g, b));
+                    for (int y = 0; y < bmp.Height; y++)
+                    {
+                        byte a = (byte) stream.ReadByte();
+                        byte r = (byte) stream.ReadByte();
+                        byte g = (byte) stream.ReadByte();
+                        byte b = (byte) stream.ReadByte();
+                        bmp.SetPixel(x, y, Color.FromArgb(a, r, g, b));
+                    }
                 }
-            }
-            stream.Close();
-
+                stream.Close();
+            #endif
             return bmp;
         }
 

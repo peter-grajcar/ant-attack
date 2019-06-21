@@ -60,7 +60,7 @@ namespace AntAttack
                     foreach (Entity entity in AntAttack.Map.Entities)
                     {
                         if (entity != this && entity is Human human &&
-                            Vector3.Dist(human.Position, Position) <= 4)
+                            Vector3.Dist(human.Position, Position) <= 2)
                         {
                             Follow = human;
                             AntAttack.Renderer.SetMessage("MY " + (this is Girl ? "HERO" : "HEROINE") + "!\n\nTAKE ME AWAY\nFROM ALL OF THIS!");

@@ -36,8 +36,6 @@ namespace AntAttack
         {
             InitializeComponent();
             timer.Enabled = true;
-            ConsoleUtil.init();
-            
             
             Bitmap canvasBmp = new Bitmap(800, 600);
             canvas.Image = canvasBmp;
@@ -48,29 +46,6 @@ namespace AntAttack
             Levels = new Levels("AntAttack/Resources/levels.txt");
             
             CurrentState = State.START;
-        }
-
-        private void initLevel(int i)
-        {
-            Level level = Levels.GetLevel(i);
-            
-            Map.RemoveAllEntities();
-            Map.CreateAndDestroyEntities();
-
-            _rescuee.Position = level.Rescuee;
-            Map.AddEntity(_rescuee);
-            _rescuer.Position = level.Rescuer;
-            Map.AddEntity(_rescuer);
-
-            foreach (Vector3 pos in level.Ants)
-            {
-                Ant ant = new Ant();
-                ant.Position = pos;
-                Map.AddEntity(ant);
-            }
-
-            Renderer.Centre = _rescuer.Position;
-            Renderer.SetMessage("Ah shit, here we go again.");
         }
 
         private bool _saved;
@@ -98,7 +73,7 @@ namespace AntAttack
                     if (startGame)
                     {
                         CurrentLevel = 0;
-                        initLevel(CurrentLevel);
+                        InitLevel(CurrentLevel);
                         TimeLeft = 1_000_000;
                         CurrentState = State.GAME;
                         _rescuer.Controllable = true;
@@ -148,7 +123,7 @@ namespace AntAttack
                     
                     if(_rescuer.WasHit)
                         Renderer.Overlay = Colour.Red;
-                    if (_rescuer.Health <= 0 || _rescuee.Health <= 0)
+                    if (_rescuer.Health <= 0 || _rescuee.Health <= 0 || TimeLeft <= 0)
                     {
                         CurrentState = State.END;
                     }
@@ -167,10 +142,11 @@ namespace AntAttack
                         _rescuee.Follow = null;
                         _rescuee.Health = 20;
                         CurrentState = State.GAME;
-                        initLevel(CurrentLevel);
+                        InitLevel(CurrentLevel);
                     }
                     break;
                 case State.END:
+                    //TODO: Game over
                     Renderer.RenderEnd();
                     break;
             }
@@ -184,6 +160,29 @@ namespace AntAttack
         {
             Keyboard.KeyPressed = keyData;
             return base.ProcessCmdKey(ref msg, keyData);
+        }
+        
+        private void InitLevel(int i)
+        {
+            Level level = Levels.GetLevel(i);
+            
+            Map.RemoveAllEntities();
+            Map.CreateAndDestroyEntities();
+
+            _rescuee.Position = level.Rescuee;
+            Map.AddEntity(_rescuee);
+            _rescuer.Position = level.Rescuer;
+            Map.AddEntity(_rescuer);
+
+            foreach (Vector3 pos in level.Ants)
+            {
+                Ant ant = new Ant();
+                ant.Position = pos;
+                Map.AddEntity(ant);
+            }
+
+            Renderer.Centre = _rescuer.Position;
+            Renderer.SetMessage("Ah shit, here we go again.");
         }
     }
 }
