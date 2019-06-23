@@ -124,8 +124,6 @@ namespace AntAttack
             {
                 _map[entity.Position.X, entity.Position.Y, entity.Position.Z] = Map.Air;
                 _entities.Remove(entity);
-                if (entity is Human human)
-                    human.Controllable = false;
             }
             _destroy.Clear();
         }
