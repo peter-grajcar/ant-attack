@@ -23,10 +23,11 @@ namespace AntAttack
         public int Depth => _depth;
         public List<Entity> Entities => _entities;
 
-        public Map(string file)
+        public Map()
         {
+            Stream stream = Properties.Resources.ResourceManager.GetStream("map");
             StreamReader streamReader;
-            using (streamReader = new StreamReader(file))
+            using (streamReader = new StreamReader(stream))
             {
                 _width = int.Parse(streamReader.ReadLine());
                 _height = int.Parse(streamReader.ReadLine());
@@ -58,6 +59,7 @@ namespace AntAttack
                     }
                 }
             }
+            stream.Close();
         }
 
         /*

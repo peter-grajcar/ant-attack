@@ -56,7 +56,8 @@ namespace AntAttack
             
                 return bmp; 
             }
-            return (Bitmap) Bitmap.FromFile("AntAttack/Resources/sprites.gif");
+
+            return Properties.Resources.sprites;
         }
 
         public Bitmap GetSprite(Sprite sprite, int direction)

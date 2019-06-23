@@ -42,8 +42,8 @@ namespace AntAttack
             
             _graphics = Graphics.FromImage(canvasBmp);
             Renderer = new Renderer(_graphics, 30);
-            Map = new Map("AntAttack/Resources/map.txt");
-            Levels = new Levels("AntAttack/Resources/levels.txt");
+            Map = new Map();
+            Levels = new Levels();
             
             CurrentState = State.START;
         }

@@ -20,12 +20,13 @@ namespace AntAttack
         public int Count => _levels.Count;
 
 
-        public Levels(string file)
+        public Levels()
         {
             _levels = new List<Level>();
             
+            Stream stream = Properties.Resources.ResourceManager.GetStream("levels");
             StreamReader streamReader;
-            using (streamReader = new StreamReader(file))
+            using (streamReader = new StreamReader(stream))
             {
                 string[] arr = streamReader.ReadLine().Split();
                 int levels = int.Parse(arr[0]);
@@ -57,6 +58,7 @@ namespace AntAttack
                     _levels.Add(level);
                 }
             }
+            stream.Close();
         }
 
         public Level GetLevel(int i)
