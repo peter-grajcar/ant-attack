@@ -56,6 +56,8 @@ namespace AntAttack
             {
                 case State.START:
                     Renderer.RenderStart();
+                    Map.RemoveAllEntities();
+                    Map.CreateAndDestroyEntities();
                     
                     bool startGame = false;
                     if (Keyboard.KeyPressed == Keys.G)
