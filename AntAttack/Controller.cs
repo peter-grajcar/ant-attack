@@ -34,6 +34,7 @@ namespace AntAttack
                     break;
             }
             
+            Keyboard.KeyPressed = Keys.None;
             AntAttack.Renderer.Centre.X = human.Position.X;
             AntAttack.Renderer.Centre.Y = human.Position.Y;
         }

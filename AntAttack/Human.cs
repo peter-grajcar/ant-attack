@@ -42,12 +42,17 @@ namespace AntAttack
             
             if (Controllable)
             {
+                if (Time.T - _lastMove < 150)
+                    return;
+                
                 Controller.Control(this);
                 if (!Controller.DidMove)
                     Controller.DidMove |= Fall();
                 
                 if(!Controller.DidMove)
                     CurrentState = State.Standing;
+                else
+                    _lastMove = Time.T;
             }
             else
             {

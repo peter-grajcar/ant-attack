@@ -63,11 +63,15 @@ namespace AntAttack
                         _rescuer = new Girl();
                         _rescuee = new Boy();
                         startGame = true;
+                        
+                        Keyboard.KeyPressed = Keys.None;
                     }else if (Keyboard.KeyPressed == Keys.B)
                     {
                         _rescuer = new Boy();
                         _rescuee = new Girl();
                         startGame = true;
+                        
+                        Keyboard.KeyPressed = Keys.None;
                     }
 
                     if (startGame)
@@ -143,14 +147,22 @@ namespace AntAttack
                         _rescuee.Health = 20;
                         CurrentState = State.GAME;
                         InitLevel(CurrentLevel);
+
+                        Keyboard.KeyPressed = Keys.None;
                     }
                     break;
                 case State.END:
                     Renderer.RenderEnd(_rescuer.Health <= 0 || _rescuee.Health <= 0 || TimeLeft <= 0);
+                    
+                    if (Keyboard.KeyPressed != Keys.None)
+                    {
+                        _saved = false;
+                        CurrentState = State.START;
+                        
+                        Keyboard.KeyPressed = Keys.None;
+                    }
                     break;
             }
-            
-            Keyboard.KeyPressed = Keys.None;
             Time.Tick();
             canvas.Refresh();
         }
