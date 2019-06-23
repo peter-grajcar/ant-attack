@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace AntAttack
 {
@@ -24,7 +25,7 @@ namespace AntAttack
         {
             _levels = new List<Level>();
             
-            Stream stream = Properties.Resources.ResourceManager.GetStream("levels");
+            MemoryStream stream = new MemoryStream(Encoding.ASCII.GetBytes(Properties.Resources.levels));
             StreamReader streamReader;
             using (streamReader = new StreamReader(stream))
             {

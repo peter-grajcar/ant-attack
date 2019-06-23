@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace AntAttack
 {
@@ -25,7 +26,7 @@ namespace AntAttack
 
         public Map()
         {
-            Stream stream = Properties.Resources.ResourceManager.GetStream("map");
+            MemoryStream stream = new MemoryStream(Encoding.ASCII.GetBytes(Properties.Resources.map));
             StreamReader streamReader;
             using (streamReader = new StreamReader(stream))
             {
