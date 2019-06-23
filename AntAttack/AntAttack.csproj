@@ -118,10 +118,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\levels.txt" />
-    <Content Include="Resources\map.txt" />
-    <Content Include="Resources\sprites.data" />
-    <Content Include="Resources\sprites.gif" />
+    <Content Include="Properties\Resources\levels.txt" />
+    <Content Include="Properties\Resources\map.txt" />
+    <Content Include="Properties\Resources\sprites.data" />
+    <Content Include="Properties\Resources\sprites.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
