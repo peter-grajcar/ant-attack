@@ -164,7 +164,18 @@ namespace AntAttack
 
             if (lost)
             {
-                //TODO: Add text
+                StringFormat format = new StringFormat();
+                format.LineAlignment = StringAlignment.Center;
+                format.Alignment = StringAlignment.Center;
+                Font font = new Font("Comic Sans MS", 50);
+                _graphics.DrawString("GAME OVER", font, Brushes.Red, new PointF(400, 210), format);
+                
+                Brush brush1 = (Time.T % 1000 > 500) ? Brushes.LightGray : Brushes.Black;
+                Brush brush2 = (Time.T % 1000 > 500) ? Brushes.Black : Brushes.LightGray;
+            
+                font = new Font("Comic Sans MS", 10);
+                _graphics.FillRectangle(brush1, new Rectangle(200,490, 400, 20));
+                _graphics.DrawString("PRESS ANY KEY ", font, brush2, new PointF(400, 500), format);
             }
             else
             {
