@@ -162,12 +162,14 @@ namespace AntAttack
             Pen pen = new Pen(Brushes.Magenta, 20);
             _graphics.DrawRectangle(pen, new Rectangle(100,100, 600, 400));
 
-            Font font
+            StringFormat format = new StringFormat();
+            format.LineAlignment = StringAlignment.Center;
+            format.Alignment = StringAlignment.Center;
+            Font font;
+            
             if (lost)
             {
-                StringFormat format = new StringFormat();
-                format.LineAlignment = StringAlignment.Center;
-                format.Alignment = StringAlignment.Center;
+                
                 font = new Font("Comic Sans MS", 50);
                 _graphics.DrawString("GAME OVER", font, Brushes.Red, new PointF(400, 210), format);
             }
@@ -175,10 +177,7 @@ namespace AntAttack
             {
                 font = new Font("Comic Sans MS", 8);
                 _graphics.DrawString("YOU ARE A REAL", font, Brushes.Black, new RectangleF(150, 150, 500, 20));
-
-                StringFormat format = new StringFormat();
-                format.LineAlignment = StringAlignment.Center;
-                format.Alignment = StringAlignment.Center;
+                
                 font = new Font("Comic Sans MS", 50);
                 _graphics.DrawString("HERO", font, Brushes.Red, new PointF(400, 210), format);
 
