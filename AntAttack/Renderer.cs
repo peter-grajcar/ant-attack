@@ -162,24 +162,18 @@ namespace AntAttack
             Pen pen = new Pen(Brushes.Magenta, 20);
             _graphics.DrawRectangle(pen, new Rectangle(100,100, 600, 400));
 
+            Font font
             if (lost)
             {
                 StringFormat format = new StringFormat();
                 format.LineAlignment = StringAlignment.Center;
                 format.Alignment = StringAlignment.Center;
-                Font font = new Font("Comic Sans MS", 50);
+                font = new Font("Comic Sans MS", 50);
                 _graphics.DrawString("GAME OVER", font, Brushes.Red, new PointF(400, 210), format);
-                
-                Brush brush1 = (Time.T % 1000 > 500) ? Brushes.LightGray : Brushes.Black;
-                Brush brush2 = (Time.T % 1000 > 500) ? Brushes.Black : Brushes.LightGray;
-            
-                font = new Font("Comic Sans MS", 10);
-                _graphics.FillRectangle(brush1, new Rectangle(200,490, 400, 20));
-                _graphics.DrawString("PRESS ANY KEY ", font, brush2, new PointF(400, 500), format);
             }
             else
             {
-                Font font = new Font("Comic Sans MS", 8);
+                font = new Font("Comic Sans MS", 8);
                 _graphics.DrawString("YOU ARE A REAL", font, Brushes.Black, new RectangleF(150, 150, 500, 20));
 
                 StringFormat format = new StringFormat();
@@ -200,6 +194,13 @@ namespace AntAttack
                 _graphics.DrawString((AntAttack.TimeLeft / 1000).ToString(), font, Brushes.Blue, new PointF(550, 450));
 
             }
+            
+            Brush brush1 = (Time.T % 1000 > 500) ? Brushes.LightGray : Brushes.Black;
+            Brush brush2 = (Time.T % 1000 > 500) ? Brushes.Black : Brushes.LightGray;
+            
+            font = new Font("Comic Sans MS", 10);
+            _graphics.FillRectangle(brush1, new Rectangle(200,490, 400, 20));
+            _graphics.DrawString("PRESS ANY KEY", font, brush2, new PointF(400, 500), format);
         }
 
         private string _text = "";
