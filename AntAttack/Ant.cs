@@ -75,6 +75,8 @@ namespace AntAttack
                        MoveForward();
                        break;
                 }
+
+                _lastMove = Time.T;
                 return;
             }
 

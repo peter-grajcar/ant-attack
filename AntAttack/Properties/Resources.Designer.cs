@@ -22,7 +22,7 @@ namespace AntAttack.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace AntAttack.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AntAttack.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace AntAttack.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -80,7 +80,7 @@ namespace AntAttack.Properties {
         ///13 32 0 
         ///.
         /// </summary>
-        internal static string levels {
+        public static string levels {
             get {
                 return ResourceManager.GetString("levels", resourceCulture);
             }
@@ -105,7 +105,7 @@ namespace AntAttack.Properties {
         ///X......................................X
         ///X.......... [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string map {
+        public static string map {
             get {
                 return ResourceManager.GetString("map", resourceCulture);
             }
@@ -114,7 +114,7 @@ namespace AntAttack.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap sprites {
+        public static System.Drawing.Bitmap sprites {
             get {
                 object obj = ResourceManager.GetObject("sprites", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
