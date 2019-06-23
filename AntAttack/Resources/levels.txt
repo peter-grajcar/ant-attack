@@ -1,0 +1,17 @@
+2       #Level count
+===Level 1===
+39 20 0 #Rescuer's position
+9 25 4  #Rescuee's position
+3       #Ant Count
+10 20 0 #Ants
+24 10 0
+5 13 0 
+===Level 2===
+39 20 0 #Rescuer's position
+10 14 0 #Rescuee's position
+5       #Ant Count
+10 20 0 #Ants
+24 10 0
+5 13 0 
+35 23 0 
+13 32 0 

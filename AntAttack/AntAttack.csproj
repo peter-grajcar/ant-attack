@@ -122,6 +122,10 @@
     <Content Include="Properties\Resources\map.txt" />
     <Content Include="Properties\Resources\sprites.data" />
     <Content Include="Properties\Resources\sprites.gif" />
+    <Content Include="Resources\levels.txt" />
+    <Content Include="Resources\map.txt" />
+    <Content Include="Resources\sprites.data" />
+    <Content Include="Resources\sprites.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
