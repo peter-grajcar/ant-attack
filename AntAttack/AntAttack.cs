@@ -81,6 +81,8 @@ namespace AntAttack
                         TimeLeft = 1_000_000;
                         CurrentState = State.GAME;
                         _rescuer.Controllable = true;
+                        _rescuer.Health = 20;
+                        _rescuee.Health = 20;
                     }
                     break;
                 case State.GAME:
