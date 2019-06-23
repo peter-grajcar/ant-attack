@@ -56,6 +56,11 @@ namespace AntAttack
             return !(u == v);
         }
 
+        public Vector3 copy()
+        {
+            return new Vector3(X, Y, Z);
+        }
+        
         public static int Dist(Vector3 u, Vector3 v)
         {
             return Math.Abs(u.X - v.X) + Math.Abs(u.Y - v.Y) + Math.Abs(u.Z - v.Z);

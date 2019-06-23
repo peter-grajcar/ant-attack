@@ -182,15 +182,15 @@ namespace AntAttack
             Map.RemoveAllEntities();
             Map.CreateAndDestroyEntities();
 
-            _rescuee.Position = level.Rescuee;
+            _rescuee.Position = level.Rescuee.copy();
             Map.AddEntity(_rescuee);
-            _rescuer.Position = level.Rescuer;
+            _rescuer.Position = level.Rescuer.copy();
             Map.AddEntity(_rescuer);
 
             foreach (Vector3 pos in level.Ants)
             {
                 Ant ant = new Ant();
-                ant.Position = pos;
+                ant.Position = pos.copy();
                 Map.AddEntity(ant);
             }
 
